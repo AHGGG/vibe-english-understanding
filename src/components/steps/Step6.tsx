@@ -76,7 +76,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
     alert('检测到默念，从第一句重新开始');
   };
 
-  const handleMarkUpdate = (sentenceId: number, mark: { isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }) => {
+  const handleMarkUpdate = (sentenceId: number, mark: Partial<{ isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }>) => {
     updateMark(sentenceId, mark);
   };
 

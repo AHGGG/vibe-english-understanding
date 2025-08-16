@@ -9,7 +9,7 @@ export const useTimer = (initialDuration: number = 0) => {
   });
 
   useEffect(() => {
-    let intervalId: number;
+    let intervalId: NodeJS.Timeout;
 
     if (timer.isRunning && timer.timeLeft > 0) {
       intervalId = setInterval(() => {

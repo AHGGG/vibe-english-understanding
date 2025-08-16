@@ -58,7 +58,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
     readTimer.start(2);
   };
 
-  const handleMarkUpdate = (sentenceId: number, mark: { isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }) => {
+  const handleMarkUpdate = (sentenceId: number, mark: Partial<{ isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }>) => {
     updateMark(sentenceId, mark);
   };
 

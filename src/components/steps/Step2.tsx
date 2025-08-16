@@ -79,7 +79,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
     start(2);
   };
 
-  const handleMarkUpdate = (sentenceId: number, mark: { isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }) => {
+  const handleMarkUpdate = (sentenceId: number, mark: Partial<{ isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }>) => {
     updateMark(sentenceId, mark);
   };
 
