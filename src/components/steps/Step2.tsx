@@ -93,7 +93,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <Card className="w-full max-w-4xl">
+      <Card className="w-full max-w-6xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 2: 标记阅读训练</CardTitle>
             <CardDescription className="text-lg">

@@ -130,7 +130,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen md:h-[calc(100vh-4rem)] bg-white md:rounded-2xl md:shadow-xl md:max-w-6xl md:mx-auto md:my-8 overflow-hidden">
+    <div className="flex flex-col h-screen w-screen md:h-[calc(100vh-4rem)] bg-white md:rounded-2xl md:shadow-xl md:max-w-6xl md:mx-auto md:my-8 overflow-hidden">
       <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center text-white shadow-md">
         <h1 className="text-2xl font-bold">英语理解力提升训练</h1>
         <div className="flex gap-4">

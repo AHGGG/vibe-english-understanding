@@ -74,7 +74,7 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 4: 深度理解验证</CardTitle>
@@ -143,7 +143,7 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
   const verifiedProgress = (verifiedSentences.size / sentences.length) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="w-full max-w-6xl">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-3xl">Step 4: 深度理解验证</CardTitle>
@@ -216,7 +216,7 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
             )}
           </div>
           
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="w-full bg-blue-50 border-blue-200">
             <CardHeader>
               <CardTitle className="text-blue-800">理解要求</CardTitle>
             </CardHeader>
@@ -228,7 +228,7 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
           </Card>
 
           {verifiedSentences.size > 0 && (
-            <Card className="bg-green-50 border-green-200">
+            <Card className="w-full bg-green-50 border-green-200">
               <CardHeader>
                 <CardTitle className="text-green-800">已验证理解的句子</CardTitle>
               </CardHeader>

@@ -86,7 +86,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
 
   if (phase === 'preparation') {
     return (
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 6: 无默念阅读训练</CardTitle>

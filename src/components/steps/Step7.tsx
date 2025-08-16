@@ -43,7 +43,7 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 7: 乱码训练</CardTitle>
@@ -108,7 +108,7 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
   const understoodProgress = (understoodSentences.size / chaosTrainingSentences.length) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="w-full max-w-6xl">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-3xl">Step 7: 乱码训练</CardTitle>

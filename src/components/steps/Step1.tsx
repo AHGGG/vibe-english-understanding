@@ -35,7 +35,7 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <Card className="w-full max-w-7xl">
+      <Card className="w-full max-w-6xl">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl">Step 1: 基础阅读训练</CardTitle>
           <CardDescription className="text-lg">

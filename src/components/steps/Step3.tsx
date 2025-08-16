@@ -103,7 +103,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
 
   if (!isStarted) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <div className="w-full max-w-6xl">
         <Card className="w-full mb-6">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 3: 倒计时循环训练</CardTitle>
@@ -174,8 +174,8 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
   const understoodProgress = (understoodSentences.size / sentences.length) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <Card>
+    <div className="w-full max-w-6xl">
+      <Card className="w-full max-w-6xl">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl">Step 3: 倒计时循环训练</CardTitle>          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
             <Badge variant="secondary" className="text-lg px-4 py-2"
@@ -203,7 +203,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
         </CardContent>
       </Card>
       
-      <Card>
+      <Card className="w-full max-w-6xl">
         <CardContent className="space-y-6">
           <div className="flex justify-center">
             <Timer timer={timer} />
