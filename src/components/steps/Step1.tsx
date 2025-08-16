@@ -14,8 +14,8 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
   const { timer, start, reset } = useTimer(2);
 
   useEffect(() => {
-    if (isStarted && timer.timeLeft === 0) {
-      // 2秒时间到，自动进入下一句
+    if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
+      // 2秒时间到，确保进度条显示100%后进入下一句
       if (currentSentence < baseSentences.length - 1) {
         setCurrentSentence(prev => prev + 1);
         start(2); // 重新开始2秒计时
@@ -24,7 +24,7 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
         onComplete();
       }
     }
-  }, [timer.timeLeft, currentSentence, isStarted, start, onComplete]);
+  }, [timer.timeLeft, timer.isRunning, currentSentence, isStarted, start, onComplete]);
 
   const handleStart = () => {
     setIsStarted(true);
@@ -73,7 +73,7 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
       </div>
       
       <div className="step-content">
-        <Timer timer={timer} showProgress />
+        <Timer timer={timer} />
         
         <SentenceDisplay
           sentence={baseSentences[currentSentence]}

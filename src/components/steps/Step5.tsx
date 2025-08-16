@@ -28,8 +28,8 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
   }, [restTimer.timer.timeLeft, restStarted]);
 
   useEffect(() => {
-    if (isReading && readTimer.timer.timeLeft === 0) {
-      // 2秒时间到，自动进入下一句
+    if (isReading && readTimer.timer.timeLeft === 0 && !readTimer.timer.isRunning) {
+      // 2秒时间到，确保进度条显示100%后进入下一句
       if (currentSentence < baseSentences.length - 1) {
         setCurrentSentence(prev => prev + 1);
         readTimer.start(2);
@@ -41,7 +41,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
         }
       }
     }
-  }, [readTimer.timer.timeLeft, currentSentence, isReading, progress.marks, onComplete]);
+  }, [readTimer.timer.timeLeft, readTimer.timer.isRunning, currentSentence, isReading, progress.marks, onComplete]);
 
   const handleStartRest = () => {
     setIsResting(true);
@@ -98,7 +98,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
         </div>
         
         <div className="step-content">
-          <Timer timer={restTimer.timer} showProgress />
+          <Timer timer={restTimer.timer} />
           
           <div className="rest-content">
             <h3>🧠 大脑休息时间</h3>
@@ -148,7 +148,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
       </div>
       
       <div className="step-content">
-        <Timer timer={readTimer.timer} showProgress />
+        <Timer timer={readTimer.timer} />
         
         <SentenceDisplay
           sentence={baseSentences[currentSentence]}

@@ -31,11 +31,11 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
   const sentences = getSentencesForPath();
 
   useEffect(() => {
-    if (isStarted && timer.timeLeft === 0) {
+    if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
       // 时间到了，没理解，进行下一句或循环
       handleTimeUp();
     }
-  }, [timer.timeLeft, isStarted]);
+  }, [timer.timeLeft, timer.isRunning, isStarted]);
 
   const handleTimeUp = () => {
     if (cycleCount >= 25) {
@@ -144,7 +144,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
       </div>
       
       <div className="step-content">
-        <Timer timer={timer} showProgress />
+        <Timer timer={timer} />
         
         <SentenceDisplay
           sentence={sentences[currentSentence]}

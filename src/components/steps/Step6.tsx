@@ -19,8 +19,8 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
   const { progress, updateMark } = useProgress();
 
   useEffect(() => {
-    if (phase === 'verification' && readTimer.timer.timeLeft === 0) {
-      // 2秒验证时间到
+    if (phase === 'verification' && readTimer.timer.timeLeft === 0 && !readTimer.timer.isRunning) {
+      // 2秒验证时间到，确保进度条显示100%后进入下一句
       if (currentSentence < baseSentences.length - 1) {
         setCurrentSentence(prev => prev + 1);
         readTimer.start(2);
@@ -36,7 +36,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
         }
       }
     }
-  }, [readTimer.timer.timeLeft, currentSentence, phase, progress.marks]);
+  }, [readTimer.timer.timeLeft, readTimer.timer.isRunning, currentSentence, phase, progress.marks]);
 
   useEffect(() => {
     if (phase === 'no-voice' && finalTimer.timer.timeLeft === 0) {
@@ -157,7 +157,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
         </div>
         
         <div className="step-content">
-          <Timer timer={readTimer.timer} showProgress />
+          <Timer timer={readTimer.timer} />
           
           <SentenceDisplay
             sentence={baseSentences[currentSentence]}
@@ -187,7 +187,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
         </div>
         
         <div className="step-content">
-          {currentSentence === 15 && <Timer timer={finalTimer.timer} showProgress />}
+          {currentSentence === 15 && <Timer timer={finalTimer.timer} />}
           
           <SentenceDisplay
             sentence={baseSentences[currentSentence]}

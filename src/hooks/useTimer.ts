@@ -15,10 +15,11 @@ export const useTimer = (initialDuration: number = 0) => {
       intervalId = setInterval(() => {
         setTimer(prev => ({
           ...prev,
-          timeLeft: prev.timeLeft - 1
+          timeLeft: Math.max(0, prev.timeLeft - 1)
         }));
       }, 1000);
-    } else if (timer.timeLeft === 0) {
+    } else if (timer.timeLeft === 0 && timer.isRunning) {
+      // Only set isRunning to false when timer actually expires
       setTimer(prev => ({ ...prev, isRunning: false }));
     }
 

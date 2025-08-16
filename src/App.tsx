@@ -12,6 +12,7 @@ import './App.css';
 function App() {
   const { progress, saveProgress, resetProgress } = useProgress();
   const [userPath, setUserPath] = useState<'A' | 'B' | 'C' | null>(progress.userPath);
+  const [resetKey, setResetKey] = useState(0);
 
   useEffect(() => {
     setUserPath(progress.userPath);
@@ -47,18 +48,37 @@ function App() {
     if (window.confirm('确定要重置所有训练进度吗？')) {
       resetProgress();
       setUserPath(null);
+      setResetKey(prev => prev + 1); // Force remount of step components
     }
+  };
+
+  const jumpToStep = (stepNumber: number) => {
+    if (stepNumber === progress.currentStep) return;
+    
+    // Allow jumping to any step that's not the current step
+    // This gives users flexibility to navigate training
+    const newProgress = {
+      ...progress,
+      currentStep: stepNumber,
+      currentSentence: 0,
+      // Mark all previous steps as completed when jumping forward
+      completedSteps: stepNumber > progress.currentStep 
+        ? [...progress.completedSteps, progress.currentStep] 
+        : progress.completedSteps.filter(s => s < stepNumber)
+    };
+    saveProgress(newProgress);
   };
 
   const renderCurrentStep = () => {
     switch (progress.currentStep) {
       case 1:
-        return <Step1 onComplete={() => handleStepComplete(2)} />;
+        return <Step1 key={`step1-${resetKey}`} onComplete={() => handleStepComplete(2)} />;
       case 2:
-        return <Step2 onComplete={handleStep2Complete} />;
+        return <Step2 key={`step2-${resetKey}`} onComplete={handleStep2Complete} />;
       case 3:
         return (
           <Step3 
+            key={`step3-${resetKey}`}
             userPath={userPath || 'A'} 
             crossCount={getCrossCount()}
             onComplete={() => handleStepComplete(4)} 
@@ -67,16 +87,17 @@ function App() {
       case 4:
         return (
           <Step4 
+            key={`step4-${resetKey}`}
             userPath={userPath || 'A'}
             onComplete={() => handleStepComplete(5)} 
           />
         );
       case 5:
-        return <Step5 onComplete={() => handleStepComplete(6)} />;
+        return <Step5 key={`step5-${resetKey}`} onComplete={() => handleStepComplete(6)} />;
       case 6:
-        return <Step6 onComplete={() => handleStepComplete(7)} />;
+        return <Step6 key={`step6-${resetKey}`} onComplete={() => handleStepComplete(7)} />;
       case 7:
-        return <Step7 onComplete={() => handleStepComplete(8)} />;
+        return <Step7 key={`step7-${resetKey}`} onComplete={() => handleStepComplete(8)} />;
       default:
         return (
           <div className="completion-screen">
@@ -113,27 +134,29 @@ function App() {
           <span>当前步骤: Step {progress.currentStep}</span>
           {userPath && <span>训练路径: {userPath}</span>}
         </div>
-        <button onClick={handleReset} className="reset-button">
-          重置进度
-        </button>
+        <div className="header-buttons">
+          <button onClick={handleReset} className="reset-button">
+            重置进度
+          </button>
+        </div>
       </header>
 
-      <main className="app-main">
-        {renderCurrentStep()}
-      </main>
+      <main className="app-main">{renderCurrentStep()}</main>
 
       <footer className="app-footer">
         <div className="step-progress">
-          {[1, 2, 3, 4, 5, 6, 7].map(step => (
-            <div 
-              key={step}
+          {[1, 2, 3, 4, 5, 6, 7].map((step) => (
+            <div
+              key={`step-${step}-${resetKey}`}
               className={`step-indicator ${
-                progress.completedSteps.includes(step) 
-                  ? 'completed' 
-                  : step === progress.currentStep 
-                    ? 'current' 
-                    : 'pending'
+                progress.completedSteps.includes(step)
+                  ? "completed"
+                  : step === progress.currentStep
+                  ? "current"
+                  : "pending"
               }`}
+              onClick={() => jumpToStep(step)}
+              title={`点击跳转到 Step ${step}`}
             >
               {step}
             </div>

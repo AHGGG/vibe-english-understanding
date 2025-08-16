@@ -16,8 +16,8 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
   const { progress, updateMark } = useProgress();
 
   useEffect(() => {
-    if (isStarted && timer.timeLeft === 0) {
-      // 2秒时间到，自动进入下一句
+    if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
+      // 2秒时间到，确保进度条显示100%后进入下一句
       if (currentSentence < baseSentences.length - 1) {
         setCurrentSentence(prev => prev + 1);
         start(2);
@@ -26,7 +26,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
         determineUserPath();
       }
     }
-  }, [timer.timeLeft, currentSentence, isStarted, start]);
+  }, [timer.timeLeft, timer.isRunning, currentSentence, isStarted, start]);
 
   const determineUserPath = () => {
     const stuckMarks = progress.marks.filter(m => m.isStuck);
@@ -105,7 +105,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
       </div>
       
       <div className="step-content">
-        <Timer timer={timer} showProgress />
+        <Timer timer={timer} />
         
         <SentenceDisplay
           sentence={baseSentences[currentSentence]}

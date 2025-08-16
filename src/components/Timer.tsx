@@ -3,13 +3,11 @@ import type { TimerState } from '../types';
 
 interface TimerProps {
   timer: TimerState;
-  showProgress?: boolean;
   className?: string;
 }
 
 export const Timer: React.FC<TimerProps> = ({ 
   timer, 
-  showProgress = false, 
   className = '' 
 }) => {
   const formatTime = (seconds: number): string => {
@@ -18,14 +16,11 @@ export const Timer: React.FC<TimerProps> = ({
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const progressPercentage = timer.duration > 0 
-    ? ((timer.duration - timer.timeLeft) / timer.duration) * 100 
-    : 0;
 
   return (
     <div className={`timer ${className}`}>
       <div className="timer-display">
-        <span className={`time ${timer.isRunning ? 'running' : ''} ${timer.timeLeft === 0 ? 'expired' : ''}`}>
+        <span className={`time ${timer.isRunning ? 'running' : ''} ${timer.timeLeft === 0 && !timer.isRunning ? 'expired' : ''}`}>
           {formatTime(timer.timeLeft)}
         </span>
         {timer.isRunning && (
@@ -33,14 +28,6 @@ export const Timer: React.FC<TimerProps> = ({
         )}
       </div>
       
-      {showProgress && timer.duration > 0 && (
-        <div className="timer-progress">
-          <div 
-            className="progress-bar"
-            style={{ width: `${progressPercentage}%` }}
-          />
-        </div>
-      )}
     </div>
   );
 };
