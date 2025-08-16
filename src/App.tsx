@@ -137,7 +137,7 @@ function App() {
             <span className="text-lg">📚</span>
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">英语理解力提升训练</h1>
+            <h1 className="text-xl md:text-2xl font-bold">单词哥-英语理解力提升训练</h1>
             <p className="text-blue-100 text-xs md:text-sm">提升阅读速度与理解能力</p>
           </div>
         </div>
@@ -170,7 +170,7 @@ function App() {
           {[1, 2, 3, 4, 5, 6, 7].map((step) => (
             <button
               key={`step-${step}-${resetKey}`}
-              className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-colors ${
+              className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-medium transition-colors shadow-md ${
                 progress.completedSteps.includes(step)
                   ? "bg-green-500 text-white hover:bg-green-600"
                   : step === progress.currentStep
