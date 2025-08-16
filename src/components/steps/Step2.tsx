@@ -97,41 +97,46 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="step-container">
-        <div className="step-header">
-          <h2>Step 2: 标记阅读训练</h2>
-          <p>重新读一遍，阅读速度要2秒内。标注从哪句开始理解卡顿。</p>
-        </div>
-        
-        <div className="step-content">
-          <div className="instruction">
-            <p><strong>标记说明：</strong></p>
-            <ul>
-              <li>✨ - 理解突然卡顿的句子</li>
-              <li>❌ - 没读懂的句子</li>
-              <li>⭕ - ✨号后面读懂的句子</li>
-            </ul>
-            <p>读完后会根据你的标记确定训练路径。</p>
+      <div className="max-w-3xl">
+        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
+          <div className="text-center mb-6 pb-6 border-b border-slate-200">
+            <h2 className="text-3xl font-bold text-[#3e1a78] mb-3">Step 2: 标记阅读训练</h2>
+            <p className="text-[#7c3aed] leading-relaxed">重新读一遍，阅读速度要2秒内。标注从哪句开始理解卡顿。</p>
           </div>
           
-          <button className="start-btn" onClick={handleStart}>
-            开始Step 2
-          </button>
+          <div className="flex flex-col items-center gap-6">
+            <div className="text-center max-w-md">
+              <p className="font-semibold text-slate-800 mb-3">标记说明：</p>
+              <ul className="text-left space-y-1 text-slate-600 mb-4">
+                <li>✨ - 理解突然卡顿的句子</li>
+                <li>❌ - 没读懂的句子</li>
+                <li>⭕ - ✨号后面读懂的句子</li>
+              </ul>
+              <p className="text-slate-700">读完后会根据你的标记确定训练路径。</p>
+            </div>
+            
+            <button 
+              className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-lg hover:shadow-xl"
+              onClick={handleStart}
+            >
+              开始Step 2
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="step-container">
-      <div className="step-header">
-        <h2>Step 2: 标记阅读训练</h2>
-        <div className="progress-info">
+    <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
+      <div className="text-center mb-6 pb-6 border-b border-slate-200">
+        <h2 className="text-3xl font-bold text-[#3e1a78] mb-3">Step 2: 标记阅读训练</h2>
+        <div className="text-sm text-[#7c3aed] font-medium">
           进度: {currentSentence + 1} / {baseSentences.length}
         </div>
       </div>
       
-      <div className="step-content">
+      <div className="flex flex-col items-center gap-6">
         <Timer timer={timer} />
         
         {currentSentence < baseSentences.length && (
@@ -150,15 +155,15 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
           </button>
         </div> */}
         
-        <div className="marks-summary">
-          <h3>当前标记：</h3>
-          <div className="marks-list">
+        <div className="mt-8 p-4 bg-slate-50 rounded-xl">
+          <h3 className="text-lg font-semibold text-slate-800 mb-3">当前标记：</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {progress.marks.map(mark => (
-              <div key={mark.sentenceId} className="mark-item">
+              <div key={mark.sentenceId} className="text-sm text-slate-600">
                 第{mark.sentenceId}句：
-                {mark.isStuck && <span className="mark stuck">✨</span>}
-                {mark.isUnderstood && <span className="mark understood">⭕</span>}
-                {mark.isNotUnderstood && <span className="mark not-understood">❌</span>}
+                {mark.isStuck && <span className="text-yellow-500 font-bold">✨</span>}
+                {mark.isUnderstood && <span className="text-green-500 font-bold">⭕</span>}
+                {mark.isNotUnderstood && <span className="text-red-500 font-bold">❌</span>}
               </div>
             ))}
           </div>

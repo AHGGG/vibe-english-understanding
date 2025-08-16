@@ -43,36 +43,41 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="step-container">
-        <div className="step-header">
-          <h2>Step 1: 基础阅读训练</h2>
-          <p>每句2秒左右，读完就读下一句，2秒没读完直接下一句，不要停留。</p>
-        </div>
-        
-        <div className="step-content">
-          <div className="instruction">
-            <p>准备好了吗？点击开始按钮开始训练。</p>
-            <p>共16句话，每句话2秒时间限制。</p>
+      <div className="max-w-3xl">
+        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
+          <div className="text-center mb-6 pb-6 border-b border-slate-200">
+            <h2 className="text-3xl font-bold text-[#3e1a78] mb-3">Step 1: 基础阅读训练</h2>
+            <p className="text-[#7c3aed] leading-relaxed">每句2秒左右，读完就读下一句，2秒没读完直接下一句，不要停留。</p>
           </div>
           
-          <button className="start-btn" onClick={handleStart}>
-            开始训练
-          </button>
+          <div className="flex flex-col items-center gap-6">
+            <div className="text-center">
+              <p className="text-slate-700 mb-2">准备好了吗？点击开始按钮开始训练。</p>
+              <p className="text-slate-500 text-sm">共16句话，每句话2秒时间限制。</p>
+            </div>
+            
+            <button 
+              className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-lg hover:shadow-xl"
+              onClick={handleStart}
+            >
+              开始训练
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="step-container">
-      <div className="step-header">
-        <h2>Step 1: 基础阅读训练</h2>
-        <div className="progress-info">
+    <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
+      <div className="text-center mb-6 pb-6 border-b border-slate-200">
+        <h2 className="text-3xl font-bold text-[#3e1a78] mb-3">Step 1: 基础阅读训练</h2>
+        <div className="flex justify-center text-sm text-[#7c3aed] font-medium">
           进度: {currentSentence + 1} / {baseSentences.length}
         </div>
       </div>
       
-      <div className="step-content">
+      <div className="flex flex-col items-center gap-6">
         <Timer timer={timer} />
         
         <SentenceDisplay

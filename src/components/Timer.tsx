@@ -18,13 +18,21 @@ export const Timer: React.FC<TimerProps> = ({
 
 
   return (
-    <div className={`timer ${className}`}>
-      <div className="timer-display">
-        <span className={`time ${timer.isRunning ? 'running' : ''} ${timer.timeLeft === 0 && !timer.isRunning ? 'expired' : ''}`}>
+    <div className={`flex flex-col items-center ${className}`}>
+      <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-lg border border-slate-200">
+        <span className={`text-3xl font-mono font-bold ${
+          timer.isRunning 
+            ? 'text-blue-600' 
+            : timer.timeLeft === 0 && !timer.isRunning 
+              ? 'text-red-600' 
+              : 'text-slate-700'
+        }`}>
           {formatTime(timer.timeLeft)}
         </span>
         {timer.isRunning && (
-          <span className="status">运行中</span>
+          <span className="text-sm text-blue-600 font-medium animate-pulse">
+            计时中...
+          </span>
         )}
       </div>
       

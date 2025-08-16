@@ -98,80 +98,118 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
 
   if (!isStarted) {
     return (
-      <div className="step-container">
-        <div className="step-header">
-          <h2>Step 3: 倒计时循环训练</h2>
-          <p>{getPathDescription()}</p>
+      <div className="max-w-3xl">
+        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
+          <h2 className="text-3xl font-bold text-[#3e1a78] mb-2">Step 3: 倒计时循环训练</h2>
+          <p className="text-lg text-[#7c3aed] font-medium">{getPathDescription()}</p>
         </div>
         
-        <div className="step-content">
-          <div className="instruction">
-            <p><strong>训练规则：</strong></p>
-            <ul>
-              <li>倒计时时间：{timeLimit}秒 (X标记数 ÷ 2)</li>
-              <li>倒计时内没理解，直接下一句，倒计时重新开始</li>
-              <li>理解一句后，只操作剩余未理解的句子</li>
-              <li>循环次数不可超过25次</li>
-              <li>要求：彻底理解每句话的含义和关系</li>
-            </ul>
+        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
+          <div className="space-y-6">
+            <div>
+              <p className="text-lg font-semibold text-slate-800 mb-3">训练规则：</p>
+              <ul className="space-y-2 text-slate-700">
+                <li className="flex items-start">
+                  <span className="text-[#7c3aed] mr-2">•</span>
+                  <span>倒计时时间：<span className="font-semibold text-[#7c3aed]">{timeLimit}秒</span> (X标记数 ÷ 2)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#7c3aed] mr-2">•</span>
+                  <span>倒计时内没理解，直接下一句，倒计时重新开始</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#7c3aed] mr-2">•</span>
+                  <span>理解一句后，只操作剩余未理解的句子</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#7c3aed] mr-2">•</span>
+                  <span>循环次数不可超过<span className="font-semibold text-[#dc2626]">25次</span></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#7c3aed] mr-2">•</span>
+                  <span>要求：彻底理解每句话的含义和关系</span>
+                </li>
+              </ul>
+            </div>
             
-            <div className="sentences-preview">
-              <h4>你要训练的句子：</h4>
-              {sentences.map((sentence) => (
-                <div key={sentence.id} className="sentence-preview">
-                  {sentence.text}
-                </div>
-              ))}
+            <div className="bg-slate-50 rounded-xl p-6">
+              <h4 className="text-lg font-semibold text-slate-800 mb-4">你要训练的句子：</h4>
+              <div className="space-y-3">
+                {sentences.map((sentence) => (
+                  <div key={sentence.id} className="p-4 bg-white rounded-lg border border-slate-200 text-slate-700 hover:border-slate-300 transition-colors">
+                    {sentence.text}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           
-          <button className="start-btn" onClick={handleStart}>
-            开始倒计时训练
-          </button>
+          <div className="mt-8 flex justify-center">
+            <button 
+              onClick={handleStart}
+              className="px-8 py-3 bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
+            >
+              开始倒计时训练
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="step-container">
-      <div className="step-header">
-        <h2>Step 3: 倒计时循环训练</h2>
-        <div className="progress-info">
-          <span>循环次数: {cycleCount}/25</span>
-          <span>已理解: {understoodSentences.size}/{sentences.length}</span>
+    <div className="max-w-3xl mx-auto p-6">
+      <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
+        <h2 className="text-3xl font-bold text-[#3e1a78] mb-2">Step 3: 倒计时循环训练</h2>
+        <div className="flex flex-col sm:flex-row gap-4 text-lg">
+          <span className="text-slate-600 bg-slate-100 px-4 py-2 rounded-lg">
+            循环次数: <span className="font-semibold text-[#7c3aed]">{cycleCount}/25</span>
+          </span>
+          <span className="text-slate-600 bg-slate-100 px-4 py-2 rounded-lg">
+            已理解: <span className="font-semibold text-[#22c55e]">{understoodSentences.size}/{sentences.length}</span>
+          </span>
         </div>
       </div>
       
-      <div className="step-content">
-        <Timer timer={timer} />
+      <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
+        <div className="mb-6 flex justify-center">
+          <Timer timer={timer} />
+        </div>
         
-        <SentenceDisplay
-          sentence={sentences[currentSentence]}
-          isActive={true}
-          className={understoodSentences.has(currentSentence) ? 'understood' : ''}
-        />
+        <div className="mb-8">
+          <SentenceDisplay
+            sentence={sentences[currentSentence]}
+            isActive={true}
+            className={understoodSentences.has(currentSentence) ? 'opacity-50' : ''}
+          />
+        </div>
         
-        <div className="controls">
+        <div className="flex justify-center mb-8">
           <button 
             onClick={handleUnderstood}
             disabled={understoodSentences.has(currentSentence)}
-            className="understand-btn"
+            className={`px-8 py-3 font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl ${
+              understoodSentences.has(currentSentence)
+                ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                : 'bg-[#22c55e] text-white hover:bg-[#16a34a]'
+            }`}
           >
             我已完全理解这句话
           </button>
         </div>
         
-        <div className="training-status">
-          <div className="understood-list">
-            <h4>已理解的句子：</h4>
-            {Array.from(understoodSentences).map(index => (
-              <div key={index} className="understood-item">
-                ✓ 第{sentences[index].id}句
-              </div>
-            ))}
+        {understoodSentences.size > 0 && (
+          <div className="bg-[#f0fdf4] rounded-xl p-6 border border-[#bbf7d0]">
+            <h4 className="text-lg font-semibold text-[#14532d] mb-3">已理解的句子：</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {Array.from(understoodSentences).map(index => (
+                <div key={index} className="bg-[#dcfce7] text-[#14532d] px-3 py-2 rounded-lg text-sm font-medium border border-[#86efac]">
+                  ✓ 第{sentences[index].id}句
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
