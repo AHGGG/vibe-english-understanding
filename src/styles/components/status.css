@@ -1,0 +1,25 @@
+.marks-summary, .training-status, .understood-list, .verified-list {
+  background: #f8f9fa;
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid #e2e8f0;
+  margin-top: var(--space-2);
+  flex-shrink: 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.marks-list, .understood-list, .verified-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.mark-item, .understood-item, .verified-item {
+  background: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid #e2e8f0;
+}

@@ -1,0 +1,21 @@
+.rest-content {
+  text-align: center;
+  background: var(--success-50);
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--success-300);
+  box-shadow: var(--shadow-md);
+}
+
+.rest-content h3 {
+  color: var(--success-800);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.rest-content p {
+  color: var(--success-700);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}

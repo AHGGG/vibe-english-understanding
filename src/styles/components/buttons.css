@@ -1,0 +1,115 @@
+/* Buttons */
+
+.start-btn, .continue-btn, .understand-btn, .verify-btn {
+  background: linear-gradient(135deg, var(--accent-600), var(--accent-700));
+  color: white;
+  border: none;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.start-btn:hover, .continue-btn:hover, .understand-btn:hover, .verify-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, var(--accent-700), var(--accent-800));
+}
+
+.start-btn:active, .continue-btn:active, .understand-btn:active, .verify-btn:active {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.start-btn:disabled, .understand-btn:disabled, .verify-btn:disabled {
+  background: var(--primary-400);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-sm);
+  opacity: 0.6;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: var(--space-4) 0;
+  flex-shrink: 0;
+}
+
+.controls button {
+  background: white;
+  border: 1px solid var(--primary-300);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: var(--primary-700);
+  box-shadow: var(--shadow-sm);
+}
+
+.controls button:hover {
+  border-color: var(--accent-500);
+  color: var(--accent-600);
+  background: var(--accent-50);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.controls button:disabled {
+  background: var(--primary-100);
+  color: var(--primary-400);
+  border-color: var(--primary-200);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Mode Selection */
+.mode-selection, .phase-selection {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: var(--space-4) 0;
+}
+
+.mode-btn, .phase-btn {
+  background: white;
+  border: 1px solid var(--primary-300);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+  color: var(--primary-700);
+  box-shadow: var(--shadow-sm);
+  min-width: 100px;
+}
+
+.mode-btn:hover, .phase-btn:hover {
+  border-color: var(--accent-500);
+  background: var(--accent-50);
+  color: var(--accent-700);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.mode-btn.selected, .phase-btn.selected {
+  border-color: var(--accent-500);
+  background: var(--accent-600);
+  color: white;
+  box-shadow: var(--shadow-md);
+}

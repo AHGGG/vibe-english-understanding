@@ -7,7 +7,7 @@ import { Step4 } from './components/steps/Step4';
 import { Step5 } from './components/steps/Step5';
 import { Step6 } from './components/steps/Step6';
 import { Step7 } from './components/steps/Step7';
-import './App.css';
+import './styles/index.css';
 
 function App() {
   const { progress, saveProgress, resetProgress } = useProgress();

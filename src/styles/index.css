@@ -1,0 +1,19 @@
+/* Import all modular CSS files */
+@import './variables.css';
+@import './base.css';
+@import './layout.css';
+@import './responsive.css';
+
+/* Import component-specific styles */
+@import './components/step-progress.css';
+@import './components/step-container.css';
+@import './components/timer.css';
+@import './components/sentence-display.css';
+@import './components/buttons.css';
+@import './components/instruction.css';
+@import './components/completion.css';
+@import './components/status.css';
+@import './components/rest.css';
+@import './components/warnings.css';
+@import './components/preview.css';
+@import './components/footer.css';
