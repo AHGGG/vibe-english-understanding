@@ -1,0 +1,597 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 应用主布局 */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.app-header {
+  background: white;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.app-header h1 {
+  color: #4a5568;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.progress-indicator {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.reset-button {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.reset-button:hover {
+  background: #c53030;
+  transform: translateY(-1px);
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.app-footer {
+  background: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 步骤进度指示器 */
+.step-progress {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.step-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.step-indicator.pending {
+  background: #e2e8f0;
+  color: #a0aec0;
+}
+
+.step-indicator.current {
+  background: #4299e1;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+}
+
+.step-indicator.completed {
+  background: #48bb78;
+  color: white;
+}
+
+/* 步骤容器 */
+.step-container {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.step-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f7fafc;
+}
+
+.step-header h2 {
+  color: #2d3748;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-header p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* 内容区域 */
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.instruction {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #4299e1;
+}
+
+.instruction h4 {
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.instruction ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.instruction li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.instruction li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #4299e1;
+  font-weight: bold;
+}
+
+/* 计时器 */
+.timer {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.time {
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d3748;
+  background: #f7fafc;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+}
+
+.time.running {
+  color: #4299e1;
+  border-color: #4299e1;
+  animation: pulse 1s infinite;
+}
+
+.time.expired {
+  color: #e53e3e;
+  border-color: #e53e3e;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.status {
+  background: #4299e1;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.timer-progress {
+  width: 100%;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4299e1, #3182ce);
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+/* 句子展示 */
+.sentence-display {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s;
+}
+
+.sentence-display.active {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.sentence-display.understood {
+  border-color: #48bb78;
+  background: #f0fff4;
+}
+
+.sentence-display.verified {
+  border-color: #9f7aea;
+  background: #faf5ff;
+}
+
+.sentence-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sentence-number {
+  color: #4a5568;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.sentence-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #2d3748;
+  flex: 1;
+}
+
+.sentence-marks {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.mark {
+  font-size: 1.2rem;
+}
+
+.mark-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.mark-btn {
+  background: white;
+  border: 2px solid #e2e8f0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mark-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mark-btn.active {
+  border-color: #4299e1;
+  background: #ebf8ff;
+}
+
+/* 按钮样式 */
+.start-btn, .continue-btn, .understand-btn, .verify-btn {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  align-self: center;
+}
+
+.start-btn:hover, .continue-btn:hover, .understand-btn:hover, .verify-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
+}
+
+.start-btn:disabled, .understand-btn:disabled, .verify-btn:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 控制按钮 */
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  background: white;
+  border: 2px solid #e2e8f0;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.controls button:hover {
+  border-color: #4299e1;
+  color: #4299e1;
+}
+
+.controls button:disabled {
+  background: #f7fafc;
+  color: #a0aec0;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+}
+
+/* 特殊模式按钮 */
+.mode-selection, .phase-selection {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mode-btn, .phase-btn {
+  background: white;
+  border: 2px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.mode-btn:hover, .phase-btn:hover {
+  border-color: #4299e1;
+  background: #ebf8ff;
+  transform: translateY(-2px);
+}
+
+/* 状态列表 */
+.marks-summary, .training-status, .understood-list, .verified-list {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.marks-list, .understood-list, .verified-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.mark-item, .understood-item, .verified-item {
+  background: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* 完成界面 */
+.completion-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.completion-content {
+  text-align: center;
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+.completion-content h1 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.training-summary {
+  text-align: left;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+}
+
+.training-summary ul {
+  list-style: none;
+  padding: 0;
+}
+
+.training-summary li {
+  padding: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+/* 休息界面 */
+.rest-content {
+  text-align: center;
+  background: #f0fff4;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #9ae6b4;
+}
+
+.rest-content h3 {
+  color: #22543d;
+  margin-bottom: 1rem;
+}
+
+/* 警告和提示 */
+.no-voice-warning, .chaos-warning {
+  background: #fff5f5;
+  border: 2px solid #fed7d7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.no-voice-warning p, .chaos-warning p {
+  color: #742a2a;
+  margin: 0.25rem 0;
+}
+
+.chaos-warning ul {
+  color: #742a2a;
+  margin: 0.5rem 0;
+}
+
+/* 预览区域 */
+.sentences-preview, .chaos-preview {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.sentence-preview {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background: white;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* 原始句子参考 */
+.original-reference {
+  margin-top: 1rem;
+  opacity: 0.7;
+}
+
+.original-reference details {
+  background: #f7fafc;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.original-reference summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .app-main {
+    padding: 1rem;
+  }
+  
+  .step-container {
+    padding: 1.5rem;
+  }
+  
+  .progress-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .mode-selection, .phase-selection {
+    flex-direction: column;
+  }
+  
+  .step-progress {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .step-indicator {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+}
