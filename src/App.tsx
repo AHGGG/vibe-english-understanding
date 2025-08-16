@@ -7,11 +7,6 @@ import { Step4 } from './components/steps/Step4';
 import { Step5 } from './components/steps/Step5';
 import { Step6 } from './components/steps/Step6';
 import { Step7 } from './components/steps/Step7';
-import { Button } from './components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
-import { Badge } from './components/ui/badge';
-import { Separator } from './components/ui/separator';
-import { CustomProgress } from './components/CustomProgress';
 import './index.css';
 
 function App() {
@@ -106,79 +101,72 @@ function App() {
       default:
         return (
           <div className="min-h-screen flex items-center justify-center">
-            <Card className="max-w-2xl w-full mx-auto">
-              <CardHeader className="text-center">
-                <CardTitle className="text-4xl font-bold text-slate-900 mb-2">🎉 训练完成！</CardTitle>
-                <p className="text-lg text-slate-700">恭喜你完成了完整的英语理解能力训练！</p>
-              </CardHeader>
-              <CardContent>
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-slate-800 mb-4">训练成果：</h3>
-                  <div className="space-y-2">
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 基础2秒阅读训练</Badge>
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 理解标记和路径分析</Badge>
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 倒计时循环强化训练</Badge>
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 深度理解验证</Badge>
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 休息恢复和最终验证</Badge>
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 无默念阅读挑战</Badge>
-                    <Badge variant="outline" className="w-full justify-start text-left py-2 px-3">✅ 乱码理解终极训练</Badge>
-                  </div>
-                  <p className="text-slate-700 mt-4">你的英语阅读理解能力应该有了显著提升！</p>
-                </div>
-                <div className="flex justify-center">
-                  <Button 
-                    onClick={handleReset}
-                    variant="default"
-                    size="lg"
-                  >
-                    重新开始训练
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg max-w-2xl w-full mx-auto text-center">
+              <h1 className="text-4xl font-bold text-slate-900 mb-6">🎉 训练完成！</h1>
+              <p className="text-lg text-slate-700 mb-8">恭喜你完成了完整的英语理解能力训练！</p>
+              <div className="text-left mb-8">
+                <h3 className="text-xl font-semibold text-slate-800 mb-4">训练成果：</h3>
+                <ul className="space-y-2 text-slate-600">
+                  <li>✅ 基础2秒阅读训练</li>
+                  <li>✅ 理解标记和路径分析</li>
+                  <li>✅ 倒计时循环强化训练</li>
+                  <li>✅ 深度理解验证</li>
+                  <li>✅ 休息恢复和最终验证</li>
+                  <li>✅ 无默念阅读挑战</li>
+                  <li>✅ 乱码理解终极训练</li>
+                </ul>
+                <p className="text-slate-700 mt-4">你的英语阅读理解能力应该有了显著提升！</p>
+              </div>
+              <button 
+                onClick={handleReset} 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              >
+                重新开始训练
+              </button>
+            </div>
           </div>
         );
     }
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-2xl max-w-6xl mx-auto my-8 overflow-hidden">
-      <header className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 px-6 py-4 flex justify-between items-center text-white shadow-lg">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-            <span className="text-lg font-bold">📚</span>
-          </div>
-          <h1 className="text-2xl font-bold">英语理解力提升训练</h1>
-        </div>
+    <div className="flex flex-col h-screen md:h-[calc(100vh-4rem)] bg-white md:rounded-2xl md:shadow-xl md:max-w-6xl md:mx-auto md:my-8 overflow-hidden">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center text-white shadow-md">
+        <h1 className="text-2xl font-bold">英语理解力提升训练</h1>
         <div className="flex gap-4">
-          <Button 
+          <button 
             onClick={handleReset} 
-            variant="outline"
-            size="sm"
-            className="bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/40 backdrop-blur-sm"
+            className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors backdrop-blur-sm"
           >
             重置进度
-          </Button>
+          </button>
         </div>
       </header>
 
       <main className="flex-1 p-6 flex justify-center items-start overflow-auto">{renderCurrentStep()}</main>
 
-      <footer className="bg-white/50 backdrop-blur-sm px-8 py-6 border-t border-slate-200">
-        <div className="max-w-2xl mx-auto">
-          <CustomProgress
-            currentStep={progress.currentStep}
-            totalSteps={7}
-            completedSteps={progress.completedSteps}
-            onStepClick={jumpToStep}
-          />
+      <footer className="bg-slate-50 px-8 py-6 border-t border-slate-200">
+        <div className="flex justify-center gap-3 mb-4">
+          {[1, 2, 3, 4, 5, 6, 7].map((step) => (
+            <button
+              key={`step-${step}-${resetKey}`}
+              className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                progress.completedSteps.includes(step)
+                  ? "bg-green-500 text-white hover:bg-green-600"
+                  : step === progress.currentStep
+                  ? "bg-blue-600 text-white"
+                  : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+              }`}
+              onClick={() => jumpToStep(step)}
+              title={`点击跳转到 Step ${step}`}
+            >
+              {step}
+            </button>
+          ))}
         </div>
-        
-        <Separator className="my-4" />
-        
         <div className="flex justify-between items-center text-sm text-slate-600">
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-xs">版本</Badge>
+            <span className="font-medium">版本</span>
             <span>v1.0.0</span>
           </div>
           <div>

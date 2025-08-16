@@ -93,8 +93,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="max-w-4xl mx-auto">
-        <Card className="w-full">
+      <Card className="w-full max-w-4xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 2: 标记阅读训练</CardTitle>
             <CardDescription className="text-lg">
@@ -131,14 +130,13 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
             </Button>
           </CardFooter>
         </Card>
-      </div>
     );
   }
 
   const progressValue = ((currentSentence + 1) / baseSentences.length) * 100;
 
   return (
-    <Card className="w-full">
+    <Card className="w-full max-w-4xl">
       <CardHeader>
         <CardTitle className="text-3xl text-center">Step 2: 标记阅读训练</CardTitle>
         <div className="flex justify-center items-center gap-4 mt-2">

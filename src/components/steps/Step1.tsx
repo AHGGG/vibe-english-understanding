@@ -35,36 +35,34 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="max-w-4xl mx-auto">
-        <Card className="w-full">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 1: 基础阅读训练</CardTitle>
-            <CardDescription className="text-lg">
-              每句2秒左右，读完就读下一句，2秒没读完直接下一句，不要停留。
-            </CardDescription>
-          </CardHeader>
-          
-          <CardContent className="text-center space-y-4">
-            <div>
-              <p className="text-muted-foreground mb-2">准备好了吗？点击开始按钮开始训练。</p>
-              <p className="text-sm text-muted-foreground">共16句话，每句话2秒时间限制。</p>
-            </div>
-          </CardContent>
-          
-          <CardFooter className="flex justify-center">
-            <Button size="lg" onClick={handleStart}>
-              开始训练
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
+      <Card className="w-full max-w-7xl">
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl">Step 1: 基础阅读训练</CardTitle>
+          <CardDescription className="text-lg">
+            每句2秒左右，读完就读下一句，2秒没读完直接下一句，不要停留。
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="text-center space-y-4">
+          <div>
+            <p className="text-muted-foreground mb-2">准备好了吗？点击开始按钮开始训练。</p>
+            <p className="text-sm text-muted-foreground">共16句话，每句话2秒时间限制。</p>
+          </div>
+        </CardContent>
+        
+        <CardFooter className="flex justify-center">
+          <Button size="lg" onClick={handleStart}>
+            开始训练
+          </Button>
+        </CardFooter>
+      </Card>
     );
   }
 
   const progressValue = ((currentSentence + 1) / baseSentences.length) * 100;
 
   return (
-    <Card className="w-full">
+    <Card className="w-full max-w-7xl">
       <CardHeader>
         <CardTitle className="text-3xl text-center">Step 1: 基础阅读训练</CardTitle>
         <div className="flex justify-center items-center gap-4 mt-2">

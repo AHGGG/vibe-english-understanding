@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
 
 interface Step3Props {
   userPath: 'A' | 'B' | 'C';
@@ -19,7 +20,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
   const [isStarted, setIsStarted] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
   const [understoodSentences, setUnderstoodSentences] = useState<Set<number>>(new Set());
-  
+
   const timeLimit = Math.floor(crossCount / 2) || 1; // X数量除以2作为倒计时秒数
   const { timer, start } = useTimer(timeLimit);
 
@@ -45,7 +46,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
     if (!understoodSentences.has(currentSentence)) {
       // 没理解，增加循环次数
       setCycleCount(prev => prev + 1);
-      
+
       // 如果还有其他句子未理解，切换到下一句
       const remainingSentences = sentences.filter((_, index) => !understoodSentences.has(index));
       if (remainingSentences.length > 1) {
@@ -55,7 +56,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
         }
         setCurrentSentence(nextIndex);
       }
-      
+
       // 重新开始计时
       start(timeLimit);
     }

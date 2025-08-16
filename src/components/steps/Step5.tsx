@@ -72,20 +72,18 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
 
   if (!restStarted && !isResting && !isReading) {
     return (
-      <div className="max-w-4xl mx-auto space-y-6">
-        <Card className="w-full">
+        <Card className="w-full max-w-4xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 5: 休息与验证</CardTitle>
             <CardDescription className="text-lg">
               恭喜完成Step4！现在需要休息10分钟，然后进行最终验证。
             </CardDescription>
           </CardHeader>
-        </Card>
-        
-        <Card className="w-full">
+          
           <CardHeader>
             <CardTitle className="text-lg">为什么要休息？</CardTitle>
           </CardHeader>
+          
           <CardContent className="space-y-4">
             <div className="space-y-3">
               <div className="flex items-start gap-2">
@@ -98,30 +96,26 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
               </div>
             </div>
           </CardContent>
+          
           <CardFooter className="flex justify-center">
-            <Button size="lg" onClick={handleStartRest}
-              >
+            <Button size="lg" onClick={handleStartRest}>
               开始10分钟休息
             </Button>
           </CardFooter>
         </Card>
-      </div>
     );
   }
 
   if (isResting) {
     return (
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
-        <Card>
+        <Card className="w-full max-w-4xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">Step 5: 休息中...</CardTitle>
             <CardDescription className="text-lg">
               请放松大脑，休息{Math.ceil(restTimer.timer.timeLeft / 60)}分钟后继续训练。
             </CardDescription>
           </CardHeader>
-        </Card>
-        
-        <Card>
+          
           <CardContent className="space-y-6">
             <div className="flex justify-center">
               <Timer timer={restTimer.timer} />
@@ -176,7 +170,6 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
             )}
           </CardContent>
         </Card>
-      </div>
     );
   }
 
