@@ -191,7 +191,7 @@ function App() {
           </div>
           <div>
             <a 
-              href="https://github.com/your-username/vibe-english-understanding" 
+              href="https://github.com/ahggg/vibe-english-understanding" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-1 md:gap-2 text-slate-600 hover:text-blue-600 transition-colors"
