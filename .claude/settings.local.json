@@ -3,7 +3,10 @@
     "allow": [
       "Bash(curl:*)",
       "Bash(npx tailwindcss:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npx shadcn@latest:*)",
+      "Bash(npm run lint)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": [],

@@ -4,6 +4,11 @@ import { Timer } from '../Timer';
 import { useTimer } from '../../hooks/useTimer';
 import { useProgress } from '../../hooks/useProgress';
 import { baseSentences } from '../../data/sentences';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
 
 interface Step2Props {
   onComplete: (userPath: 'A' | 'B' | 'C') => void;
@@ -12,8 +17,25 @@ interface Step2Props {
 export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
   const [currentSentence, setCurrentSentence] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
-  const { timer, start, reset } = useTimer(2);
+  const { timer, start } = useTimer(2);
   const { progress, updateMark } = useProgress();
+
+  const determineUserPath = React.useCallback(() => {
+    const stuckMarks = progress.marks.filter(m => m.isStuck);
+    const understoodMarks = progress.marks.filter(m => m.isUnderstood);
+    
+    let userPath: 'A' | 'B' | 'C';
+    
+    if (stuckMarks.length > 0 && stuckMarks[0].sentenceId <= 7) {
+      userPath = 'A'; // 星号在第1-7句内
+    } else if (stuckMarks.length > 0 && stuckMarks[0].sentenceId > 7 && understoodMarks.length === 0) {
+      userPath = 'B'; // 星号在7句外且没有⭕
+    } else {
+      userPath = 'C'; // 星号在7句外且有⭕
+    }
+    
+    onComplete(userPath);
+  }, [progress.marks, onComplete]);
 
   useEffect(() => {
     if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
@@ -33,7 +55,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
         });
       }
     }
-  }, [timer.timeLeft, timer.isRunning, currentSentence, isStarted, progress.marks, updateMark]);
+  }, [timer.timeLeft, timer.isRunning, currentSentence, isStarted, progress.marks, updateMark, determineUserPath]);
 
   // 单独处理自动跳转到下一句的逻辑
   useEffect(() => {
@@ -50,43 +72,17 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
       
       return () => clearTimeout(timer);
     }
-  }, [timer.isRunning, timer.timeLeft, currentSentence, isStarted, start]);
-
-  const determineUserPath = () => {
-    const stuckMarks = progress.marks.filter(m => m.isStuck);
-    const understoodMarks = progress.marks.filter(m => m.isUnderstood);
-    
-    let userPath: 'A' | 'B' | 'C';
-    
-    if (stuckMarks.length > 0 && stuckMarks[0].sentenceId <= 7) {
-      userPath = 'A'; // 星号在第1-7句内
-    } else if (stuckMarks.length > 0 && stuckMarks[0].sentenceId > 7 && understoodMarks.length === 0) {
-      userPath = 'B'; // 星号在7句外且没有⭕
-    } else {
-      userPath = 'C'; // 星号在7句外且有⭕
-    }
-    
-    onComplete(userPath);
-  };
+  }, [timer.isRunning, timer.timeLeft, currentSentence, isStarted, start, determineUserPath]);
 
   const handleStart = () => {
     setIsStarted(true);
     start(2);
   };
 
-  const handleMarkUpdate = (sentenceId: number, mark: any) => {
+  const handleMarkUpdate = (sentenceId: number, mark: { isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }) => {
     updateMark(sentenceId, mark);
   };
 
-  const handleNext = () => {
-    if (currentSentence < baseSentences.length - 1) {
-      setCurrentSentence(prev => prev + 1);
-      reset(2);
-      start(2);
-    } else {
-      determineUserPath();
-    }
-  };
 
   const getCurrentMark = () => {
     if (currentSentence >= baseSentences.length || currentSentence < 0) {
@@ -97,47 +93,66 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="max-w-3xl">
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
-          <div className="text-center mb-6 pb-6 border-b border-slate-200">
-            <h2 className="text-3xl font-bold text-[#3e1a78] mb-3">Step 2: 标记阅读训练</h2>
-            <p className="text-[#7c3aed] leading-relaxed">重新读一遍，阅读速度要2秒内。标注从哪句开始理解卡顿。</p>
-          </div>
+      <div className="max-w-4xl mx-auto">
+        <Card className="w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Step 2: 标记阅读训练</CardTitle>
+            <CardDescription className="text-lg">
+              重新读一遍，阅读速度要2秒内。标注从哪句开始理解卡顿。
+            </CardDescription>
+          </CardHeader>
           
-          <div className="flex flex-col items-center gap-6">
-            <div className="text-center max-w-md">
-              <p className="font-semibold text-slate-800 mb-3">标记说明：</p>
-              <ul className="text-left space-y-1 text-slate-600 mb-4">
-                <li>✨ - 理解突然卡顿的句子</li>
-                <li>❌ - 没读懂的句子</li>
-                <li>⭕ - ✨号后面读懂的句子</li>
-              </ul>
-              <p className="text-slate-700">读完后会根据你的标记确定训练路径。</p>
-            </div>
-            
-            <button 
-              className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-lg hover:shadow-xl"
-              onClick={handleStart}
-            >
+          <CardContent className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">标记说明</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-yellow-500 hover:bg-yellow-600">✨</Badge>
+                  <span>理解突然卡顿的句子</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-red-500 hover:bg-red-600">❌</Badge>
+                  <span>没读懂的句子</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-green-500 hover:bg-green-600">⭕</Badge>
+                  <span>✨号后面读懂的句子</span>
+                </div>
+                <p className="text-muted-foreground">读完后会根据你的标记确定训练路径。</p>
+              </CardContent>
+            </Card>
+          </CardContent>
+          
+          <CardFooter className="flex justify-center">
+            <Button size="lg" onClick={handleStart}>
               开始Step 2
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     );
   }
 
+  const progressValue = ((currentSentence + 1) / baseSentences.length) * 100;
+
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
-      <div className="text-center mb-6 pb-6 border-b border-slate-200">
-        <h2 className="text-3xl font-bold text-[#3e1a78] mb-3">Step 2: 标记阅读训练</h2>
-        <div className="text-sm text-[#7c3aed] font-medium">
-          进度: {currentSentence + 1} / {baseSentences.length}
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle className="text-3xl text-center">Step 2: 标记阅读训练</CardTitle>
+        <div className="flex justify-center items-center gap-4 mt-2">
+          <Badge variant="secondary">
+            进度: {currentSentence + 1} / {baseSentences.length}
+          </Badge>
         </div>
-      </div>
+        <Progress value={progressValue} className="mt-4" />
+      </CardHeader>
       
-      <div className="flex flex-col items-center gap-6">
-        <Timer timer={timer} />
+      <CardContent className="space-y-6">
+        <div className="flex justify-center">
+          <Timer timer={timer} />
+        </div>
         
         {currentSentence < baseSentences.length && (
           <SentenceDisplay
@@ -149,26 +164,26 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
           />
         )}
         
-        {/* <div className="controls">
-          <button onClick={handleNext} disabled={timer.isRunning}>
-            下一句 (或等待自动跳转)
-          </button>
-        </div> */}
+        <Separator />
         
-        <div className="mt-8 p-4 bg-slate-50 rounded-xl">
-          <h3 className="text-lg font-semibold text-slate-800 mb-3">当前标记：</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {progress.marks.map(mark => (
-              <div key={mark.sentenceId} className="text-sm text-slate-600">
-                第{mark.sentenceId}句：
-                {mark.isStuck && <span className="text-yellow-500 font-bold">✨</span>}
-                {mark.isUnderstood && <span className="text-green-500 font-bold">⭕</span>}
-                {mark.isNotUnderstood && <span className="text-red-500 font-bold">❌</span>}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">当前标记</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {progress.marks.map(mark => (
+                <div key={mark.sentenceId} className="flex items-center gap-2 text-sm">
+                  <span className="text-muted-foreground">第{mark.sentenceId}句：</span>
+                  {mark.isStuck && <Badge className="bg-yellow-500 hover:bg-yellow-600">✨</Badge>}
+                  {mark.isUnderstood && <Badge className="bg-green-500 hover:bg-green-600">⭕</Badge>}
+                  {mark.isNotUnderstood && <Badge className="bg-red-500 hover:bg-red-600">❌</Badge>}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </CardContent>
+    </Card>
   );
 };

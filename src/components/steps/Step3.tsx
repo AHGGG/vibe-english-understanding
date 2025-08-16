@@ -3,6 +3,10 @@ import { SentenceDisplay } from '../SentenceDisplay';
 import { Timer } from '../Timer';
 import { useTimer } from '../../hooks/useTimer';
 import { pathASentences, pathBSentences, pathCSentences } from '../../data/sentences';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 
 interface Step3Props {
   userPath: 'A' | 'B' | 'C';
@@ -30,14 +34,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
 
   const sentences = getSentencesForPath();
 
-  useEffect(() => {
-    if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
-      // 时间到了，没理解，进行下一句或循环
-      handleTimeUp();
-    }
-  }, [timer.timeLeft, timer.isRunning, isStarted]);
-
-  const handleTimeUp = () => {
+  const handleTimeUp = React.useCallback(() => {
     if (cycleCount >= 25) {
       // 超过25次循环，停止
       onComplete();
@@ -62,7 +59,14 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
       // 重新开始计时
       start(timeLimit);
     }
-  };
+  }, [cycleCount, onComplete, understoodSentences, currentSentence, sentences, start, timeLimit]);
+
+  useEffect(() => {
+    if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
+      // 时间到了，没理解，进行下一句或循环
+      handleTimeUp();
+    }
+  }, [timer.timeLeft, timer.isRunning, isStarted, handleTimeUp]);
 
   const handleUnderstood = () => {
     const newUnderstood = new Set(understoodSentences);
@@ -98,119 +102,150 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
 
   if (!isStarted) {
     return (
-      <div className="max-w-3xl">
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
-          <h2 className="text-3xl font-bold text-[#3e1a78] mb-2">Step 3: 倒计时循环训练</h2>
-          <p className="text-lg text-[#7c3aed] font-medium">{getPathDescription()}</p>
-        </div>
+      <div className="max-w-4xl mx-auto">
+        <Card className="w-full mb-6">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Step 3: 倒计时循环训练</CardTitle>
+            <CardDescription className="text-lg">{getPathDescription()}</CardDescription>
+          </CardHeader>
+        </Card>
         
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
-          <div className="space-y-6">
-            <div>
-              <p className="text-lg font-semibold text-slate-800 mb-3">训练规则：</p>
-              <ul className="space-y-2 text-slate-700">
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>倒计时时间：<span className="font-semibold text-[#7c3aed]">{timeLimit}秒</span> (X标记数 ÷ 2)</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>倒计时内没理解，直接下一句，倒计时重新开始</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>理解一句后，只操作剩余未理解的句子</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>循环次数不可超过<span className="font-semibold text-[#dc2626]">25次</span></span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>要求：彻底理解每句话的含义和关系</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="bg-slate-50 rounded-xl p-6">
-              <h4 className="text-lg font-semibold text-slate-800 mb-4">你要训练的句子：</h4>
-              <div className="space-y-3">
-                {sentences.map((sentence) => (
-                  <div key={sentence.id} className="p-4 bg-white rounded-lg border border-slate-200 text-slate-700 hover:border-slate-300 transition-colors">
-                    {sentence.text}
-                  </div>
-                ))}
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-lg">训练规则</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-start gap-2"
+                >
+                <Badge variant="secondary">规则1</Badge>
+                <span>倒计时时间：<Badge className="bg-primary">{timeLimit}秒</Badge> (X标记数 ÷ 2)</span>
+              </div>
+              <div className="flex items-start gap-2"
+                >
+                <Badge variant="secondary">规则2</Badge>
+                <span>倒计时内没理解，直接下一句，倒计时重新开始</span>
+              </div>
+              <div className="flex items-start gap-2"
+                >
+                <Badge variant="secondary">规则3</Badge>
+                <span>理解一句后，只操作剩余未理解的句子</span>
+              </div>
+              <div className="flex items-start gap-2"
+                >
+                <Badge variant="secondary">规则4</Badge>
+                <span>循环次数不可超过<Badge className="bg-destructive">25次</Badge></span>
+              </div>
+              <div className="flex items-start gap-2"
+                >
+                <Badge variant="secondary">要求</Badge>
+                <span>彻底理解每句话的含义和关系</span>
               </div>
             </div>
-          </div>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">你要训练的句子：</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {sentences.map((sentence) => (
+                  <Card key={sentence.id} className="p-4 hover:shadow-md transition-shadow">
+                    <CardContent className="p-0">
+                      <p className="text-muted-foreground">{sentence.text}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </CardContent>
+            </Card>
+          </CardContent>
           
-          <div className="mt-8 flex justify-center">
-            <button 
-              onClick={handleStart}
-              className="px-8 py-3 bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
-            >
+          <CardFooter className="flex justify-center">
+            <Button size="lg" onClick={handleStart}>
               开始倒计时训练
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     );
   }
 
+  const cycleProgress = (cycleCount / 25) * 100;
+  const understoodProgress = (understoodSentences.size / sentences.length) * 100;
+
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
-        <h2 className="text-3xl font-bold text-[#3e1a78] mb-2">Step 3: 倒计时循环训练</h2>
-        <div className="flex flex-col sm:flex-row gap-4 text-lg">
-          <span className="text-slate-600 bg-slate-100 px-4 py-2 rounded-lg">
-            循环次数: <span className="font-semibold text-[#7c3aed]">{cycleCount}/25</span>
-          </span>
-          <span className="text-slate-600 bg-slate-100 px-4 py-2 rounded-lg">
-            已理解: <span className="font-semibold text-[#22c55e]">{understoodSentences.size}/{sentences.length}</span>
-          </span>
-        </div>
-      </div>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl">Step 3: 倒计时循环训练</CardTitle>          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+            <Badge variant="secondary" className="text-lg px-4 py-2"
+              >
+              循环次数: {cycleCount}/25
+            </Badge>
+            <Badge variant="secondary" className="text-lg px-4 py-2"
+              >
+              已理解: {understoodSentences.size}/{sentences.length}
+            </Badge>
+          </div>        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">循环进度</label>
+              <Progress value={cycleProgress} className="h-2" />
+              <p className="text-sm text-muted-foreground">{cycleCount}/25 次</p>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">理解进度</label>
+              <Progress value={understoodProgress} className="h-2" />
+              <p className="text-sm text-muted-foreground">{understoodSentences.size}/{sentences.length} 句</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       
-      <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
-        <div className="mb-6 flex justify-center">
-          <Timer timer={timer} />
-        </div>
-        
-        <div className="mb-8">
+      <Card>
+        <CardContent className="space-y-6">
+          <div className="flex justify-center">
+            <Timer timer={timer} />
+          </div>
+          
           <SentenceDisplay
             sentence={sentences[currentSentence]}
             isActive={true}
             className={understoodSentences.has(currentSentence) ? 'opacity-50' : ''}
           />
-        </div>
-        
-        <div className="flex justify-center mb-8">
-          <button 
-            onClick={handleUnderstood}
-            disabled={understoodSentences.has(currentSentence)}
-            className={`px-8 py-3 font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl ${
-              understoodSentences.has(currentSentence)
-                ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                : 'bg-[#22c55e] text-white hover:bg-[#16a34a]'
-            }`}
-          >
-            我已完全理解这句话
-          </button>
-        </div>
-        
-        {understoodSentences.size > 0 && (
-          <div className="bg-[#f0fdf4] rounded-xl p-6 border border-[#bbf7d0]">
-            <h4 className="text-lg font-semibold text-[#14532d] mb-3">已理解的句子：</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {Array.from(understoodSentences).map(index => (
-                <div key={index} className="bg-[#dcfce7] text-[#14532d] px-3 py-2 rounded-lg text-sm font-medium border border-[#86efac]">
-                  ✓ 第{sentences[index].id}句
-                </div>
-              ))}
-            </div>
+          
+          <div className="flex justify-center">
+            <Button 
+              onClick={handleUnderstood}
+              disabled={understoodSentences.has(currentSentence)}
+              size="lg"
+              className={understoodSentences.has(currentSentence) 
+                ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+                : 'bg-green-600 hover:bg-green-700 text-white'}
+            >
+              {understoodSentences.has(currentSentence) ? '已理解' : '我已完全理解这句话'}
+            </Button>
           </div>
-        )}
-      </div>
+          
+          {understoodSentences.size > 0 && (
+            <Card className="bg-green-50 border-green-200">
+              <CardHeader>
+                <CardTitle className="text-green-800">已理解的句子</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {Array.from(understoodSentences).map(index => (
+                    <Badge key={index} variant="outline" className="bg-green-100 text-green-800 border-green-300 justify-center py-2"
+                      >
+                      ✓ 第{sentences[index].id}句
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };

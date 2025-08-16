@@ -4,6 +4,10 @@ import { Timer } from '../Timer';
 import { useTimer } from '../../hooks/useTimer';
 import { useProgress } from '../../hooks/useProgress';
 import { baseSentences } from '../../data/sentences';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 
 interface Step5Props {
   onComplete: () => void;
@@ -41,7 +45,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
         }
       }
     }
-  }, [readTimer.timer.timeLeft, readTimer.timer.isRunning, currentSentence, isReading, progress.marks, onComplete]);
+  }, [readTimer.timer.timeLeft, readTimer.timer.isRunning, currentSentence, isReading, progress.marks, onComplete, readTimer]);
 
   const handleStartRest = () => {
     setIsResting(true);
@@ -54,7 +58,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
     readTimer.start(2);
   };
 
-  const handleMarkUpdate = (sentenceId: number, mark: any) => {
+  const handleMarkUpdate = (sentenceId: number, mark: { isNotUnderstood: boolean; isStuck: boolean; isUnderstood: boolean }) => {
     updateMark(sentenceId, mark);
   };
 
@@ -68,152 +72,188 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
 
   if (!restStarted && !isResting && !isReading) {
     return (
-      <div className="max-w-3xl">
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">Step 5: 休息与验证</h2>
-          <p className="text-lg text-blue-600 font-medium">恭喜完成Step4！现在需要休息10分钟，然后进行最终验证。</p>
-        </div>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <Card className="w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Step 5: 休息与验证</CardTitle>
+            <CardDescription className="text-lg">
+              恭喜完成Step4！现在需要休息10分钟，然后进行最终验证。
+            </CardDescription>
+          </CardHeader>
+        </Card>
         
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 hover:shadow-[0_25px_50px_rgba(0,0,0,0.12),0_12px_24px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-200">
-          <div className="space-y-6">
-            <div>
-              <p className="text-lg font-semibold text-gray-800 mb-3">为什么要休息？</p>
-              <ul className="space-y-2 text-gray-700">
-                <li className="flex items-start">
-                  <span className="text-blue-500 mr-2">•</span>
-                  <span>如果不休息，大脑会宕机，会出现已经开始不工作的情况，影响训练效果。</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-500 mr-2">•</span>
-                  <span>休息后，你将以2秒每句的速度重新读一遍16句话，没有理解的打叉X。</span>
-                </li>
-              </ul>
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-lg">为什么要休息？</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-start gap-2">
+                <Badge variant="secondary">原因1</Badge>
+                <span>如果不休息，大脑会宕机，会出现已经开始不工作的情况，影响训练效果。</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="secondary">原因2</Badge>
+                <span>休息后，你将以2秒每句的速度重新读一遍16句话，没有理解的打叉X。</span>
+              </div>
             </div>
-          </div>
-          
-          <div className="mt-8 flex justify-center">
-            <button 
-              onClick={handleStartRest}
-              className="px-8 py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
-            >
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button size="lg" onClick={handleStartRest}
+              >
               开始10分钟休息
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     );
   }
 
   if (isResting) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">Step 5: 休息中...</h2>
-          <p className="text-lg text-blue-600 font-medium">请放松大脑，休息{Math.ceil(restTimer.timer.timeLeft / 60)}分钟后继续训练。</p>
-        </div>
+      <div className="max-w-4xl mx-auto p-6 space-y-6">
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Step 5: 休息中...</CardTitle>
+            <CardDescription className="text-lg">
+              请放松大脑，休息{Math.ceil(restTimer.timer.timeLeft / 60)}分钟后继续训练。
+            </CardDescription>
+          </CardHeader>
+        </Card>
         
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="mb-8">
-            <Timer timer={restTimer.timer} />
-          </div>
-          
-          <div className="text-center space-y-4 mb-8">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">🧠 大脑休息时间</h3>
-            <div className="bg-blue-50 rounded-xl p-6 space-y-3">
-              <p className="text-blue-800 text-lg">请不要思考训练内容，让大脑充分休息。</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                <div className="bg-green-50 p-4 rounded-lg">
-                  <p className="font-semibold text-green-800 mb-2">可以做的事：</p>
-                  <ul className="text-green-700 space-y-1">
-                    <li>• 喝水</li>
-                    <li>• 聊天</li>
-                    <li>• 看风景</li>
-                    <li>• 听音乐</li>
-                  </ul>
-                </div>
-                <div className="bg-red-50 p-4 rounded-lg">
-                  <p className="font-semibold text-red-800 mb-2">不要做的事：</p>
-                  <ul className="text-red-700 space-y-1">
-                    <li>• 继续思考句子</li>
-                    <li>• 阅读相关内容</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {restTimer.timer.timeLeft === 0 && (
+        <Card>
+          <CardContent className="space-y-6">
             <div className="flex justify-center">
-              <button 
-                onClick={() => setIsResting(false)}
-                className="px-8 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl"
-              >
-                休息完成，开始验证
-              </button>
+              <Timer timer={restTimer.timer} />
             </div>
-          )}
-        </div>
+            
+            <div className="text-center space-y-4">
+              <CardTitle className="text-2xl">🧠 大脑休息时间</CardTitle>
+              <Card className="bg-blue-50 border-blue-200">
+                <CardContent className="space-y-4 pt-6"
+                  >
+                  <p className="text-blue-800 text-lg">请不要思考训练内容，让大脑充分休息。</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left"
+                    >
+                    <Card className="bg-green-50 border-green-200">
+                      <CardHeader>
+                        <CardTitle className="text-green-800 text-base">可以做的事：</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="text-green-700 space-y-1"
+                          >
+                          <li>• 喝水</li>
+                          <li>• 聊天</li>
+                          <li>• 看风景</li>
+                          <li>• 听音乐</li>
+                        </ul>
+                      </CardContent>
+                    </Card>
+                    <Card className="bg-red-50 border-red-200">
+                      <CardHeader>
+                        <CardTitle className="text-red-800 text-base">不要做的事：</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="text-red-700 space-y-1"
+                          >
+                          <li>• 继续思考句子</li>
+                          <li>• 阅读相关内容</li>
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {restTimer.timer.timeLeft === 0 && (
+              <div className="flex justify-center">
+                <Button size="lg" onClick={() => setIsResting(false)}
+                  >
+                  休息完成，开始验证
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   if (!isReading) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">Step 5: 最终验证</h2>
-          <p className="text-lg text-blue-600 font-medium">休息完了！现在以2秒每句的速度读一遍16句话。</p>
-        </div>
+      <div className="max-w-4xl mx-auto p-6 space-y-6">
+        <Card className="w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Step 5: 最终验证</CardTitle>
+            <CardDescription className="text-lg">
+              休息完了！现在以2秒每句的速度读一遍16句话。
+            </CardDescription>
+          </CardHeader>
+        </Card>
         
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="mb-6">
-            <p className="text-gray-700 text-lg">没有理解的话请打叉X，我们将在Step6中继续处理。</p>
-          </div>
-          
-          <div className="flex justify-center">
-            <button 
-              onClick={handleStartReading}
-              className="px-8 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl"
-            >
-              开始最终验证
-            </button>
-          </div>
-        </div>
+        <Card className="w-full">
+          <CardContent className="space-y-6">
+            <div className="text-center"
+              >
+              <p className="text-muted-foreground text-lg">没有理解的话请打叉X，我们将在Step6中继续处理。</p>
+            </div>
+            
+            <CardFooter className="flex justify-center"
+              >
+              <Button size="lg" onClick={handleStartReading}
+                >
+                开始最终验证
+              </Button>
+            </CardFooter>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
+  const readingProgress = ((currentSentence + 1) / baseSentences.length) * 100;
+
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Step 5: 最终验证</h2>
-        <div className="text-sm text-blue-600 font-medium">
-          进度: {currentSentence + 1} / {baseSentences.length}
-        </div>
-      </div>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl">Step 5: 最终验证</CardTitle>
+          <div className="flex justify-center items-center gap-4 mt-2">
+            <Badge variant="secondary">
+              进度: {currentSentence + 1} / {baseSentences.length}
+            </Badge>
+          </div>
+          <Progress value={readingProgress} className="mt-4" />
+        </CardHeader>
+      </Card>
       
-      <div className="bg-white rounded-2xl shadow-xl p-8">
-        <div className="mb-6">
-          <Timer timer={readTimer.timer} />
-        </div>
-        
-        <SentenceDisplay
-          sentence={baseSentences[currentSentence]}
-          mark={getCurrentMark()}
-          showMarkButtons={true}
-          onMarkUpdate={(mark) => handleMarkUpdate(baseSentences[currentSentence].id, mark)}
-          isActive={true}
-        />
-        
-        <div className="mt-6 p-4 bg-blue-50 rounded-xl">
-          <p className="text-blue-800 font-medium">未理解句子数量: {getUnunderstoodCount()}</p>
-          {getUnunderstoodCount() === 0 && currentSentence === baseSentences.length - 1 && (
-            <div className="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-semibold">
-              🎉 恭喜！所有句子都已理解，可以进入下一步！
-            </div>
-          )}
-        </div>
-      </div>
+      <Card>
+        <CardContent className="space-y-6">
+          <div className="flex justify-center">
+            <Timer timer={readTimer.timer} />
+          </div>
+          
+          <SentenceDisplay
+            sentence={baseSentences[currentSentence]}
+            mark={getCurrentMark()}
+            showMarkButtons={true}
+            onMarkUpdate={(mark) => handleMarkUpdate(baseSentences[currentSentence].id, mark)}
+            isActive={true}
+          />
+          
+          <Card className="bg-blue-50 border-blue-200">
+            <CardContent className="pt-6">
+              <p className="text-blue-800 font-medium">未理解句子数量: {getUnunderstoodCount()}</p>
+              {getUnunderstoodCount() === 0 && currentSentence === baseSentences.length - 1 && (
+                <div className="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-semibold">
+                  🎉 恭喜！所有句子都已理解，可以进入下一步！
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </CardContent>
+      </Card>
     </div>
   );
 };

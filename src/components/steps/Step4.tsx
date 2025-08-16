@@ -3,6 +3,10 @@ import { SentenceDisplay } from '../SentenceDisplay';
 import { Timer } from '../Timer';
 import { useTimer } from '../../hooks/useTimer';
 import { pathASentences, pathBSentences, pathCSentences } from '../../data/sentences';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 
 interface Step4Props {
   userPath: 'A' | 'B' | 'C';
@@ -69,158 +73,178 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
 
   if (!isStarted) {
     return (
-      <div className="max-w-3xl">
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
-          <h2 className="text-3xl font-bold text-[#3e1a78] mb-2">Step 4: 深度理解验证</h2>
-          <p className="text-lg text-[#7c3aed] font-medium">如果Step3没有完全理解所有句子，现在给你无限时间深度理解。</p>
-        </div>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <Card className="w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl">Step 4: 深度理解验证</CardTitle>
+            <CardDescription className="text-lg">
+              如果Step3没有完全理解所有句子，现在给你无限时间深度理解。
+            </CardDescription>
+          </CardHeader>
+        </Card>
         
-        <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
-          <div className="space-y-6">
-            <div>
-              <p className="text-lg font-semibold text-slate-800 mb-3">训练说明：</p>
-              <ul className="space-y-2 text-slate-700">
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>可以画思维导图、逻辑图等任何方式帮助理解</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>要求：<span className="font-semibold text-[#7c3aed]">4秒内</span>能清晰透彻地理解句子含义</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>理解后需要验证：4秒内阅读是否能完成理解</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#7c3aed] mr-2">•</span>
-                  <span>如果4秒内不能理解，继续深度学习</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="bg-slate-50 rounded-xl p-6">
-              <h4 className="text-lg font-semibold text-slate-800 mb-4">需要深度理解的句子：</h4>
-              <div className="space-y-3">
-                {sentences.map((sentence) => (
-                  <div key={sentence.id} className="p-4 bg-white rounded-lg border border-slate-200 text-slate-700 hover:border-slate-300 transition-colors">
-                    {sentence.text}
-                  </div>
-                ))}
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-lg">训练说明</CardTitle>
+          </CardHeader>          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-start gap-2">
+                <Badge variant="secondary">方法</Badge>
+                <span>可以画思维导图、逻辑图等任何方式帮助理解</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="secondary">要求</Badge>
+                <span><Badge className="bg-primary">4秒内</Badge>能清晰透彻地理解句子含义</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="secondary">验证</Badge>
+                <span>理解后需要验证：4秒内阅读是否能完成理解</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Badge variant="secondary">继续</Badge>
+                <span>如果4秒内不能理解，继续深度学习</span>
               </div>
             </div>
-          </div>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">需要深度理解的句子：</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {sentences.map((sentence) => (
+                  <Card key={sentence.id} className="p-4 hover:shadow-md transition-shadow"
+                    >
+                    <CardContent className="p-0"
+                      >
+                      <p className="text-muted-foreground">{sentence.text}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </CardContent>
+            </Card>
+          </CardContent>
           
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button 
-              onClick={handleStartUnlimited} 
-              className="px-6 py-4 bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
-            >
+          <CardFooter className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Button size="lg" onClick={handleStartUnlimited} variant="secondary"
+              >
               开始无限时理解模式
-            </button>
-            <button 
-              onClick={handleStartVerification} 
-              className="px-6 py-4 bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
-            >
+            </Button>
+            <Button size="lg" onClick={handleStartVerification}
+              >
               开始4秒验证模式
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     );
   }
 
+  const verifiedProgress = (verifiedSentences.size / sentences.length) * 100;
+
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200 mb-6">
-        <h2 className="text-3xl font-bold text-[#3e1a78] mb-2">Step 4: 深度理解验证</h2>
-        
-        <div className="flex flex-col sm:flex-row gap-4 text-lg">
-          <span className={`px-4 py-2 rounded-lg font-medium ${
-            isUnlimitedMode 
-              ? 'bg-[#f0f4ff] text-[#7c3aed]' 
-              : 'bg-[#eff6ff] text-[#3b82f6]'
-          }`}>
-            {isUnlimitedMode ? '无限时理解模式' : '4秒验证模式'}
-          </span>
-          <span className="text-slate-600 bg-slate-100 px-4 py-2 rounded-lg">
-            已验证: <span className="font-semibold text-[#22c55e]">{verifiedSentences.size}/{sentences.length}</span>
-          </span>
-        </div>
-      </div>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl">Step 4: 深度理解验证</CardTitle>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+            <Badge 
+              variant={isUnlimitedMode ? "default" : "secondary"} 
+              className="text-lg px-4 py-2"
+            >
+              {isUnlimitedMode ? '无限时理解模式' : '4秒验证模式'}
+            </Badge>
+            <Badge variant="secondary" className="text-lg px-4 py-2"
+              >
+              已验证: {verifiedSentences.size}/{sentences.length}
+            </Badge>
+          </div>
+          <Progress value={verifiedProgress} className="mt-4" />
+        </CardHeader>
+      </Card>
       
-      <div className="bg-white rounded-2xl p-6 shadow-xl w-full mx-auto border border-slate-200">
-        <div className="mb-6 flex justify-center">
-          {!isUnlimitedMode && <Timer timer={timer} />}
-        </div>
-        
-        <div className="mb-8">
+      <Card>
+        <CardContent className="space-y-6">
+          <div className="flex justify-center">
+            {!isUnlimitedMode && <Timer timer={timer} />}
+          </div>
+          
           <SentenceDisplay
             sentence={sentences[currentSentence]}
             isActive={true}
             className={verifiedSentences.has(currentSentence) ? 'opacity-50' : ''}
           />
-        </div>
-        
-        <div className="mb-8">
-          {isUnlimitedMode ? (
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => setIsUnlimitedMode(false)}
-                className="px-6 py-3 bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
-              >
-                切换到4秒验证模式
-              </button>
-              <button 
-                onClick={handleNextSentence}
-                className="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
-              >
-                下一句
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => setIsUnlimitedMode(true)}
-                className="px-6 py-3 bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-semibold rounded-lg transition-colors shadow-lg hover:shadow-xl"
-              >
-                需要更多时间理解
-              </button>
-              <button 
-                onClick={handleSentenceVerified}
-                disabled={verifiedSentences.has(currentSentence)}
-                className={`px-6 py-3 font-semibold rounded-lg transition-all shadow-lg hover:shadow-xl ${
-                  verifiedSentences.has(currentSentence)
-                    ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                    : 'bg-[#22c55e] text-white hover:bg-[#16a34a]'
-                }`}
-              >
-                我已在4秒内完全理解
-              </button>
-            </div>
-          )}
-        </div>
-        
-        <div className="bg-[#eff6ff] rounded-xl p-6 mb-8 border border-[#bfdbfe]">
-          <h4 className="text-lg font-semibold text-[#1e40af] mb-3">理解要求：</h4>
-          <p className="text-[#1e40af] leading-relaxed">
-            能够立刻回答：联邦、法院、委员会、社区之间的任何关系，谁支持法案？谁反对法案？谁赞同谁？谁反对谁？等等关系都要立刻反应出来。
-          </p>
-        </div>
-
-        {verifiedSentences.size > 0 && (
-          <div className="bg-[#f0fdf4] rounded-xl p-6 border border-[#bbf7d0]">
-            <h4 className="text-lg font-semibold text-[#14532d] mb-3">已验证理解的句子：</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {Array.from(verifiedSentences).map(index => (
-                <div key={index} className="bg-[#dcfce7] text-[#14532d] px-3 py-2 rounded-lg text-sm font-medium border border-[#86efac]">
-                  ✓ 第{sentences[index].id}句
-                </div>
-              ))}
-            </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {isUnlimitedMode ? (
+              <>
+                <Button 
+                  onClick={() => setIsUnlimitedMode(false)}
+                  variant="outline"
+                  size="lg"
+                >
+                  切换到4秒验证模式
+                </Button>
+                <Button 
+                  onClick={handleNextSentence}
+                  variant="secondary"
+                  size="lg"
+                >
+                  下一句
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  onClick={() => setIsUnlimitedMode(true)}
+                  variant="outline"
+                  size="lg"
+                >
+                  需要更多时间理解
+                </Button>
+                <Button 
+                  onClick={handleSentenceVerified}
+                  disabled={verifiedSentences.has(currentSentence)}
+                  size="lg"
+                  className={verifiedSentences.has(currentSentence) 
+                    ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+                    : 'bg-green-600 hover:bg-green-700 text-white'}
+                >
+                  {verifiedSentences.has(currentSentence) ? '已验证' : '我已在4秒内完全理解'}
+                </Button>
+              </>
+            )}
           </div>
-        )}
-      </div>
+          
+          <Card className="bg-blue-50 border-blue-200">
+            <CardHeader>
+              <CardTitle className="text-blue-800">理解要求</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-blue-800 leading-relaxed">
+                能够立刻回答：联邦、法院、委员会、社区之间的任何关系，谁支持法案？谁反对法案？谁赞同谁？谁反对谁？等等关系都要立刻反应出来。
+              </p>
+            </CardContent>
+          </Card>
+
+          {verifiedSentences.size > 0 && (
+            <Card className="bg-green-50 border-green-200">
+              <CardHeader>
+                <CardTitle className="text-green-800">已验证理解的句子</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {Array.from(verifiedSentences).map(index => (
+                    <Badge key={index} variant="outline" className="bg-green-100 text-green-800 border-green-300 justify-center py-2"
+                      >
+                      ✓ 第{sentences[index].id}句
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
