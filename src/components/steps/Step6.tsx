@@ -89,14 +89,14 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
       <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 6: 无默念阅读训练</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 6: 无默念阅读训练</CardTitle>
             <CardDescription className="text-lg">
               最终挑战：以心中无默念的形式进行阅览
             </CardDescription>
           </CardHeader>
         </Card>
         
-        <Card className="w-full">
+        <Card className="w-full mt-6">
           <CardHeader>
             <CardTitle className="text-lg">训练规则</CardTitle>
           </CardHeader>          <CardContent className="space-y-4">
@@ -144,7 +144,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 6: 无限时练习</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 6: 无限时练习</CardTitle>
             <CardDescription className="text-lg">
               可以使用思维导图等任何方式，确保完全理解所有句子
             </CardDescription>
@@ -197,7 +197,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 6: 2秒验证测试</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 6: 2秒验证测试</CardTitle>
             <div className="flex justify-center items-center gap-4 mt-2">
               <Badge variant="secondary">
                 进度: {currentSentence + 1} / {baseSentences.length}
@@ -239,7 +239,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl text-center">Step 6: 无默念阅读训练</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl text-center">Step 6: 无默念阅读训练</CardTitle>
             <div className="flex justify-between items-center text-sm text-blue-600 font-medium mt-2">
               <Badge variant="secondary">
                 进度: {currentSentence + 1} / {baseSentences.length}
@@ -297,7 +297,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 6: 完成！</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 6: 完成！</CardTitle>
           <CardDescription className="text-green-600 text-lg font-medium">
             恭喜完成无默念阅读训练！
           </CardDescription>

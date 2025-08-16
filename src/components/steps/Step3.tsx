@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
 
 interface Step3Props {
   userPath: 'A' | 'B' | 'C';
@@ -106,7 +105,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
       <div className="w-full max-w-6xl">
         <Card className="w-full mb-6">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 3: 倒计时循环训练</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 3: 倒计时循环训练</CardTitle>
             <CardDescription className="text-lg">{getPathDescription()}</CardDescription>
           </CardHeader>
         </Card>
@@ -177,7 +176,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
     <div className="w-full max-w-6xl">
       <Card className="w-full max-w-6xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 3: 倒计时循环训练</CardTitle>          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+          <CardTitle className="text-2xl md:text-3xl">Step 3: 倒计时循环训练</CardTitle>          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
             <Badge variant="secondary" className="text-lg px-4 py-2"
               >
               循环次数: {cycleCount}/25
@@ -203,7 +202,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
         </CardContent>
       </Card>
       
-      <Card className="w-full max-w-6xl">
+      <Card className="w-full max-w-6xl mt-6">
         <CardContent className="space-y-6">
           <div className="flex justify-center">
             <Timer timer={timer} />

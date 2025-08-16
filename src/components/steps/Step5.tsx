@@ -74,7 +74,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
     return (
       <Card className="w-full max-w-6xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 5: 休息与验证</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 5: 休息与验证</CardTitle>
           <CardDescription className="text-lg">
             恭喜完成Step4！现在需要休息10分钟，然后进行最终验证。
           </CardDescription>
@@ -110,7 +110,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
     return (
       <Card className="w-full max-w-6xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 5: 休息中...</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 5: 休息中...</CardTitle>
           <CardDescription className="text-lg">
             请放松大脑，休息{Math.ceil(restTimer.timer.timeLeft / 60)}分钟后继续训练。
           </CardDescription>
@@ -178,7 +178,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
       <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 5: 最终验证</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 5: 最终验证</CardTitle>
             <CardDescription className="text-lg">
               休息完了！现在以2秒每句的速度读一遍16句话。
             </CardDescription>
@@ -211,7 +211,7 @@ export const Step5: React.FC<Step5Props> = ({ onComplete }) => {
     <div className="w-full max-w-6xl">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 5: 最终验证</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 5: 最终验证</CardTitle>
           <div className="flex justify-center items-center gap-4 mt-2">
             <Badge variant="secondary">
               进度: {currentSentence + 1} / {baseSentences.length}

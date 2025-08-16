@@ -95,7 +95,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
     return (
       <Card className="w-full max-w-6xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 2: 标记阅读训练</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 2: 标记阅读训练</CardTitle>
             <CardDescription className="text-lg">
               重新读一遍，阅读速度要2秒内。标注从哪句开始理解卡顿。
             </CardDescription>
@@ -138,7 +138,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
-        <CardTitle className="text-3xl text-center">Step 2: 标记阅读训练</CardTitle>
+        <CardTitle className="text-2xl md:text-3xl text-center">Step 2: 标记阅读训练</CardTitle>
         <div className="flex justify-center items-center gap-4 mt-2">
           <Badge variant="secondary">
             进度: {currentSentence + 1} / {baseSentences.length}

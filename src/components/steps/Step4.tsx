@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
 
 interface Step4Props {
   userPath: 'A' | 'B' | 'C';
@@ -77,14 +76,14 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
       <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 4: 深度理解验证</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 4: 深度理解验证</CardTitle>
             <CardDescription className="text-lg">
               如果Step3没有完全理解所有句子，现在给你无限时间深度理解。
             </CardDescription>
           </CardHeader>
         </Card>
         
-        <Card className="w-full">
+        <Card className="w-full mt-6">
           <CardHeader>
             <CardTitle className="text-lg">训练说明</CardTitle>
           </CardHeader>          <CardContent className="space-y-4">
@@ -146,7 +145,7 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
     <div className="w-full max-w-6xl">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 4: 深度理解验证</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 4: 深度理解验证</CardTitle>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
             <Badge 
               variant={isUnlimitedMode ? "default" : "secondary"} 
@@ -163,7 +162,7 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
         </CardHeader>
       </Card>
       
-      <Card>
+      <Card className='mt-6'>
         <CardContent className="space-y-6">
           <div className="flex justify-center">
             {!isUnlimitedMode && <Timer timer={timer} />}

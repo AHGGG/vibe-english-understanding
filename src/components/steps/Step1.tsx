@@ -37,7 +37,7 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
     return (
       <Card className="w-full max-w-6xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 1: 基础阅读训练</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 1: 基础阅读训练</CardTitle>
           <CardDescription className="text-lg">
             每句2秒左右，读完就读下一句，2秒没读完直接下一句，不要停留。
           </CardDescription>

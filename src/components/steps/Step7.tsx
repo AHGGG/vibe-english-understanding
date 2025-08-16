@@ -46,14 +46,14 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
       <div className="w-full max-w-6xl">
         <Card className="w-full">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Step 7: 乱码训练</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">Step 7: 乱码训练</CardTitle>
             <CardDescription className="text-lg">
               最终挑战：理解用乱码替换的句子
             </CardDescription>
           </CardHeader>
         </Card>
         
-        <Card className="w-full">
+        <Card className="w-full mt-6">
           <CardHeader>
             <CardTitle className="text-lg">训练说明</CardTitle>
           </CardHeader>
@@ -111,7 +111,7 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
     <div className="w-full max-w-6xl">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Step 7: 乱码训练</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl">Step 7: 乱码训练</CardTitle>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
             <Badge variant="secondary" className="text-lg px-4 py-2">
               进度: {currentSentence + 1} / {chaosTrainingSentences.length}
@@ -134,8 +134,8 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
           </div>
         </CardHeader>
       </Card>
-      
-      <Card>
+
+      <Card className="mt-6">
         <CardContent className="space-y-6">
           <Card className={understoodSentences.has(currentSentence) ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'}>
             <CardContent>
