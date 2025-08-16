@@ -80,11 +80,11 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
           isActive={true}
         />
         
-        <div className="controls">
+        {/* <div className="controls">
           <button onClick={handleNext} disabled={timer.isRunning}>
             下一句 (或等待自动跳转)
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

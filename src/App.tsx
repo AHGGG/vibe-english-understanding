@@ -130,10 +130,10 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>英语理解力提升训练</h1>
-        <div className="progress-indicator">
+        {/* <div className="progress-indicator">
           <span>当前步骤: Step {progress.currentStep}</span>
           {userPath && <span>训练路径: {userPath}</span>}
-        </div>
+        </div> */}
         <div className="header-buttons">
           <button onClick={handleReset} className="reset-button">
             重置进度
