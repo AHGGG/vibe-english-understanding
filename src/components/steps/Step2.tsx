@@ -17,16 +17,40 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
 
   useEffect(() => {
     if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
-      // 2秒时间到，确保进度条显示100%后进入下一句
-      if (currentSentence < baseSentences.length - 1) {
-        setCurrentSentence(prev => prev + 1);
-        start(2);
-      } else {
-        // 所有句子标记完成，确定用户路径
+      // 2秒时间到，如果用户还没有标记，默认为❌没读懂
+      if (currentSentence >= baseSentences.length) {
         determineUserPath();
+        return;
+      }
+      
+      const currentMark = progress.marks.find(m => m.sentenceId === baseSentences[currentSentence].id);
+      if (!currentMark) {
+        // 用户没有点击任何按钮，自动标记为❌没读懂
+        updateMark(baseSentences[currentSentence].id, {
+          isNotUnderstood: true,
+          isStuck: false,
+          isUnderstood: false
+        });
       }
     }
-  }, [timer.timeLeft, timer.isRunning, currentSentence, isStarted, start]);
+  }, [timer.timeLeft, timer.isRunning, currentSentence, isStarted, progress.marks, updateMark]);
+
+  // 单独处理自动跳转到下一句的逻辑
+  useEffect(() => {
+    if (isStarted && !timer.isRunning && timer.timeLeft === 0) {
+      const timer = setTimeout(() => {
+        if (currentSentence < baseSentences.length - 1) {
+          setCurrentSentence(prev => prev + 1);
+          start(2);
+        } else if (currentSentence === baseSentences.length - 1) {
+          // 所有句子标记完成，确定用户路径
+          determineUserPath();
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [timer.isRunning, timer.timeLeft, currentSentence, isStarted, start]);
 
   const determineUserPath = () => {
     const stuckMarks = progress.marks.filter(m => m.isStuck);
@@ -65,6 +89,9 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
   };
 
   const getCurrentMark = () => {
+    if (currentSentence >= baseSentences.length || currentSentence < 0) {
+      return undefined;
+    }
     return progress.marks.find(m => m.sentenceId === baseSentences[currentSentence].id);
   };
 
@@ -107,13 +134,15 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
       <div className="step-content">
         <Timer timer={timer} />
         
-        <SentenceDisplay
-          sentence={baseSentences[currentSentence]}
-          mark={getCurrentMark()}
-          showMarkButtons={true}
-          onMarkUpdate={(mark) => handleMarkUpdate(baseSentences[currentSentence].id, mark)}
-          isActive={true}
-        />
+        {currentSentence < baseSentences.length && (
+          <SentenceDisplay
+            sentence={baseSentences[currentSentence]}
+            mark={getCurrentMark()}
+            showMarkButtons={true}
+            onMarkUpdate={(mark) => handleMarkUpdate(baseSentences[currentSentence].id, mark)}
+            isActive={true}
+          />
+        )}
         
         {/* <div className="controls">
           <button onClick={handleNext} disabled={timer.isRunning}>
