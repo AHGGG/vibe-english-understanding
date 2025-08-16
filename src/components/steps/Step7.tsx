@@ -138,7 +138,7 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
       <Card>
         <CardContent className="space-y-6">
           <Card className={understoodSentences.has(currentSentence) ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'}>
-            <CardContent className="pt-6">
+            <CardContent>
               <SentenceDisplay
                 sentence={chaosTrainingSentences[currentSentence]}
                 isActive={true}
@@ -148,7 +148,7 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
           
           {chaosTrainingSentences[currentSentence].original && (
             <Card className="bg-gray-50 border-gray-200">
-              <CardContent className="pt-6">
+              <CardContent>
                 <details className="text-sm">
                   <summary className="cursor-pointer text-gray-700 hover:text-gray-900 font-medium">原始句子参考（仅供对比，不要依赖）</summary>
                   <p className="mt-2 text-gray-600">{chaosTrainingSentences[currentSentence].original}</p>
@@ -187,7 +187,7 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
           </div>
           
           <Card className="bg-red-50 border-red-200">
-            <CardContent className="pt-6">
+            <CardContent>
               <p className="font-semibold text-red-800 mb-2">⚠️ 重要提醒：</p>
               <ul className="space-y-1 text-red-700">
                 <li>不要将乱码符号与原词进行关联</li>
