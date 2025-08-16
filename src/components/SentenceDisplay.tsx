@@ -49,9 +49,9 @@ export const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
         {mark && (
           <div className="flex gap-2 items-center">
             <span className="text-sm text-slate-500">当前标记：</span>
-            {mark.isStuck && <span className="text-yellow-500 text-xl font-bold">✨</span>}
-            {mark.isUnderstood && <span className="text-green-500 text-xl font-bold">⭕</span>}
-            {mark.isNotUnderstood && <span className="text-red-500 text-xl font-bold">❌</span>}
+            {mark.isStuck && <span className="text-emerald-500 text-xl font-bold">✨</span>}
+            {mark.isUnderstood && <span className="text-zinc-500 text-xl font-bold">⭕</span>}
+            {mark.isNotUnderstood && <span className="text-blue-500 text-xl font-bold">❌</span>}
           </div>
         )}
         

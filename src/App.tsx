@@ -100,13 +100,13 @@ function App() {
         return <Step7 key={`step7-${resetKey}`} onComplete={() => handleStepComplete(8)} />;
       default:
         return (
-          <div className="min-h-screen flex items-center justify-center">
-            <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg max-w-2xl w-full mx-auto text-center">
-              <h1 className="text-4xl font-bold text-slate-900 mb-6">🎉 训练完成！</h1>
-              <p className="text-lg text-slate-700 mb-8">恭喜你完成了完整的英语理解能力训练！</p>
-              <div className="text-left mb-8">
-                <h3 className="text-xl font-semibold text-slate-800 mb-4">训练成果：</h3>
-                <ul className="space-y-2 text-slate-600">
+          <div className="w-full max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg text-center">
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">🎉 训练完成！</h1>
+              <p className="text-base md:text-lg text-slate-700 mb-6">恭喜你完成了完整的英语理解能力训练！</p>
+              <div className="text-left mb-6">
+                <h3 className="text-lg md:text-xl font-semibold text-slate-800 mb-3">训练成果：</h3>
+                <ul className="space-y-1 text-sm md:text-base text-slate-600">
                   <li>✅ 基础2秒阅读训练</li>
                   <li>✅ 理解标记和路径分析</li>
                   <li>✅ 倒计时循环强化训练</li>
@@ -115,11 +115,11 @@ function App() {
                   <li>✅ 无默念阅读挑战</li>
                   <li>✅ 乱码理解终极训练</li>
                 </ul>
-                <p className="text-slate-700 mt-4">你的英语阅读理解能力应该有了显著提升！</p>
+                <p className="text-slate-700 mt-3 text-sm md:text-base">你的英语阅读理解能力应该有了显著提升！</p>
               </div>
               <button 
                 onClick={handleReset} 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm md:text-base"
               >
                 重新开始训练
               </button>
@@ -131,12 +131,32 @@ function App() {
 
   return (
     <div className="flex flex-col h-[100dvh] w-screen md:h-[calc(100vh-4rem)] bg-white md:rounded-2xl md:shadow-xl md:max-w-6xl md:mx-auto overflow-hidden">
-      <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-1 flex justify-between items-center text-white shadow-md">
-        <h1 className="text-2xl font-bold">英语理解力提升训练</h1>
-        <div className="flex gap-4">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-2 flex justify-between items-center text-white shadow-lg">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+            <span className="text-lg">📚</span>
+          </div>
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold">英语理解力提升训练</h1>
+            <p className="text-blue-100 text-xs md:text-sm">提升阅读速度与理解能力</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center space-x-2 md:space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
+            <span className="text-sm text-blue-100">进度</span>
+            <div className="w-20 h-2 bg-white/20 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-white rounded-full transition-all duration-300" 
+                style={{ width: `${(progress.currentStep / 7) * 100}%` }}
+              />
+            </div>
+            <span className="text-sm font-medium">{progress.currentStep}/7</span>
+          </div>
+          
           <button 
             onClick={handleReset} 
-            className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors backdrop-blur-sm"
+            className="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-sm font-medium transition-all backdrop-blur-sm hover:scale-105"
           >
             重置进度
           </button>

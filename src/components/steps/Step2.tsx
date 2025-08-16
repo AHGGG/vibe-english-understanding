@@ -108,15 +108,15 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-yellow-500 hover:bg-yellow-600">✨</Badge>
+                <Badge className="bg-emerald-500 hover:bg-emerald-600">✨</Badge>
                   <span>理解突然卡顿的句子</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-red-500 hover:bg-red-600">❌</Badge>
+                  <Badge className="bg-blue-600 hover:bg-blue-700">❌</Badge>
                   <span>没读懂的句子</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-green-500 hover:bg-green-600">⭕</Badge>
+                <Badge className="bg-zinc-500 hover:bg-zinc-600">⭕</Badge>
                   <span>✨号后面读懂的句子</span>
                 </div>
                 <p className="text-muted-foreground">读完后会根据你的标记确定训练路径。</p>
@@ -173,9 +173,9 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
               {progress.marks.map(mark => (
                 <div key={mark.sentenceId} className="flex items-center gap-2 text-sm">
                   <span className="text-muted-foreground">第{mark.sentenceId}句：</span>
-                  {mark.isStuck && <Badge className="bg-yellow-500 hover:bg-yellow-600">✨</Badge>}
-                  {mark.isUnderstood && <Badge className="bg-green-500 hover:bg-green-600">⭕</Badge>}
-                  {mark.isNotUnderstood && <Badge className="bg-red-500 hover:bg-red-600">❌</Badge>}
+                  {mark.isStuck && <Badge className="bg-emerald-500 hover:bg-yellow-600">✨</Badge>}
+                  {mark.isUnderstood && <Badge className="bg-blue-500 hover:bg-green-600">⭕</Badge>}
+                  {mark.isNotUnderstood && <Badge className="bg-zinc-500 hover:bg-red-600">❌</Badge>}
                 </div>
               ))}
             </div>

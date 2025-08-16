@@ -64,7 +64,7 @@ export const Step1: React.FC<Step1Props> = ({ onComplete }) => {
   return (
     <Card className="w-full max-w-7xl">
       <CardHeader>
-        <CardTitle className="text-3xl text-center">Step 1: 基础阅读训练</CardTitle>
+        <CardTitle className="text-2xl md:text-3xl text-center">Step 1: 基础阅读训练</CardTitle>
         <div className="flex justify-center items-center gap-4 mt-2">
           <Badge variant="secondary">
             进度: {currentSentence + 1} / {baseSentences.length}

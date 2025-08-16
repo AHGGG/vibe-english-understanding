@@ -141,7 +141,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
 
   if (phase === 'unlimited') {
     return (
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto p-1 space-y-2">
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl md:text-3xl">Step 6: 无限时练习</CardTitle>
@@ -152,7 +152,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
         </Card>
         
         <Card>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-2">
             <SentenceDisplay
               sentence={baseSentences[currentSentence]}
               mark={getCurrentMark()}
@@ -194,21 +194,21 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
     const verificationProgress = ((currentSentence + 1) / baseSentences.length) * 100;
     
     return (
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto p-1 space-y-2">
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl md:text-3xl">Step 6: 2秒验证测试</CardTitle>
-            <div className="flex justify-center items-center gap-4 mt-2">
+            <div className="flex justify-center items-center gap-4 mt-1">
               <Badge variant="secondary">
                 进度: {currentSentence + 1} / {baseSentences.length}
               </Badge>
             </div>
-            <Progress value={verificationProgress} className="mt-4" />
+            <Progress value={verificationProgress} className="mt-2" />
           </CardHeader>
         </Card>
         
         <Card>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-2">
             <div className="flex justify-center">
               <Timer timer={readTimer.timer} />
             </div>
@@ -222,7 +222,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
             />
             
             <Card className="bg-blue-50 border-blue-200">
-              <CardContent className="pt-6">
+              <CardContent>
                 <p className="text-blue-800 font-medium text-center">
                   所有句子必须在2秒内完全理解才能进入无默念训练
                 </p>
@@ -236,7 +236,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
 
   if (phase === 'no-voice') {
     return (
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto p-1 space-y-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl md:text-3xl text-center">Step 6: 无默念阅读训练</CardTitle>
@@ -252,7 +252,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
         </Card>
         
         <Card>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-2">
             {currentSentence === 15 && (
               <div className="flex justify-center">
                 <Timer timer={finalTimer.timer} />
@@ -282,7 +282,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
             </div>
             
             <Card className="bg-red-50 border-red-200">
-              <CardContent className="pt-6 text-center">
+              <CardContent className="text-center">
                 <p className="text-red-800 font-medium mb-2">⚠️ 严格监控：不能有任何默念！一旦默念必须从第一句重来</p>
                 <p className="text-red-700">当前句子：{currentSentence < 15 ? '不限时' : '4秒限时'}</p>
               </CardContent>
@@ -294,7 +294,7 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-4xl mx-auto p-1 space-y-2">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-2xl md:text-3xl">Step 6: 完成！</CardTitle>
@@ -305,8 +305,8 @@ export const Step6: React.FC<Step6Props> = ({ onComplete }) => {
       </Card>
       
       <Card>
-        <CardContent className="text-center space-y-6">
-          <div className="space-y-4">
+        <CardContent className="text-center space-y-2">
+          <div className="space-y-2">
             <CardTitle className="text-2xl text-green-800">🎉 训练成果</CardTitle>
             <div className="space-y-2 text-muted-foreground">
               <p>你已经成功完成了第16句话的无默念阅读训练！</p>

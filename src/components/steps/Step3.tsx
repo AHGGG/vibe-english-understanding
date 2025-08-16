@@ -174,35 +174,35 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
 
   return (
     <div className="w-full max-w-6xl">
-      <Card className="w-full max-w-6xl">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl md:text-3xl">Step 3: 倒计时循环训练</CardTitle>          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
-            <Badge variant="secondary" className="text-lg px-4 py-2"
-              >
-              循环次数: {cycleCount}/25
-            </Badge>
-            <Badge variant="secondary" className="text-lg px-4 py-2"
-              >
-              已理解: {understoodSentences.size}/{sentences.length}
-            </Badge>
-          </div>        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">循环进度</label>
-              <Progress value={cycleProgress} className="h-2" />
-              <p className="text-sm text-muted-foreground">{cycleCount}/25 次</p>
+      <Card className="w-full max-w-6xl p-3 sm:p-4">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-lg sm:text-xl">Step 3: 倒计时训练</CardTitle>
+            <div className="flex gap-2">
+              <Badge variant="secondary" className="text-xs sm:text-sm px-2 py-1">
+                循环: {cycleCount}/25
+              </Badge>
+              <Badge variant="secondary" className="text-xs sm:text-sm px-2 py-1">
+                已理解: {understoodSentences.size}/{sentences.length}
+              </Badge>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">理解进度</label>
-              <Progress value={understoodProgress} className="h-2" />
-              <p className="text-sm text-muted-foreground">{understoodSentences.size}/{sentences.length} 句</p>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <Progress value={cycleProgress} className="h-1.5" />
+              <p className="text-xs text-muted-foreground mt-1">循环 {cycleCount}/25</p>
+            </div>
+            <div>
+              <Progress value={understoodProgress} className="h-1.5" />
+              <p className="text-xs text-muted-foreground mt-1">理解 {understoodSentences.size}/{sentences.length}</p>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card className="w-full max-w-6xl mt-6">
+      <Card className="w-full max-w-6xl mt-2">
         <CardContent className="space-y-6">
           <div className="flex justify-center">
             <Timer timer={timer} />

@@ -143,23 +143,27 @@ export const Step4: React.FC<Step4Props> = ({ userPath, onComplete }) => {
 
   return (
     <div className="w-full max-w-6xl">
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl md:text-3xl">Step 4: 深度理解验证</CardTitle>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
-            <Badge 
-              variant={isUnlimitedMode ? "default" : "secondary"} 
-              className="text-lg px-4 py-2"
-            >
-              {isUnlimitedMode ? '无限时理解模式' : '4秒验证模式'}
-            </Badge>
-            <Badge variant="secondary" className="text-lg px-4 py-2"
+      <Card className="w-full max-w-6xl p-3 sm:p-4">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-lg sm:text-xl">Step 4: 深度理解验证</CardTitle>
+            <div className="flex gap-2">
+              <Badge 
+                variant={isUnlimitedMode ? "default" : "secondary"} 
+                className="text-xs sm:text-sm px-2 py-1"
               >
-              已验证: {verifiedSentences.size}/{sentences.length}
-            </Badge>
+                {isUnlimitedMode ? '无限时' : '4秒'}
+              </Badge>
+              <Badge variant="secondary" className="text-xs sm:text-sm px-2 py-1">
+                已验证: {verifiedSentences.size}/{sentences.length}
+              </Badge>
+            </div>
           </div>
-          <Progress value={verifiedProgress} className="mt-4" />
         </CardHeader>
+        <CardContent className="space-y-2">
+          <Progress value={verifiedProgress} className="h-1.5" />
+          <p className="text-xs text-muted-foreground">验证进度 {verifiedSentences.size}/{sentences.length}</p>
+        </CardContent>
       </Card>
       
       <Card className='mt-6'>

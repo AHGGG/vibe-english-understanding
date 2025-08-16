@@ -109,30 +109,32 @@ export const Step7: React.FC<Step7Props> = ({ onComplete }) => {
 
   return (
     <div className="w-full max-w-6xl">
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl md:text-3xl">Step 7: 乱码训练</CardTitle>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              进度: {currentSentence + 1} / {chaosTrainingSentences.length}
-            </Badge>
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              已理解: {understoodSentences.size} / {chaosTrainingSentences.length}
-            </Badge>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">阅读进度</label>
-              <Progress value={progressValue} className="h-2" />
-              <p className="text-sm text-muted-foreground">{currentSentence + 1}/{chaosTrainingSentences.length} 句</p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">理解进度</label>
-              <Progress value={understoodProgress} className="h-2" />
-              <p className="text-sm text-muted-foreground">{understoodSentences.size}/{chaosTrainingSentences.length} 句</p>
+      <Card className="w-full max-w-6xl p-3 sm:p-4">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-lg sm:text-xl">Step 7: 乱码训练</CardTitle>
+            <div className="flex gap-2">
+              <Badge variant="secondary" className="text-xs sm:text-sm px-2 py-1">
+                进度: {currentSentence + 1}/{chaosTrainingSentences.length}
+              </Badge>
+              <Badge variant="secondary" className="text-xs sm:text-sm px-2 py-1">
+                已理解: {understoodSentences.size}/{chaosTrainingSentences.length}
+              </Badge>
             </div>
           </div>
         </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <Progress value={progressValue} className="h-1.5" />
+              <p className="text-xs text-muted-foreground mt-1">阅读 {currentSentence + 1}/{chaosTrainingSentences.length}</p>
+            </div>
+            <div>
+              <Progress value={understoodProgress} className="h-1.5" />
+              <p className="text-xs text-muted-foreground mt-1">理解 {understoodSentences.size}/{chaosTrainingSentences.length}</p>
+            </div>
+          </div>
+        </CardContent>
       </Card>
 
       <Card className="mt-6">
