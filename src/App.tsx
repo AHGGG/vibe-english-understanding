@@ -137,7 +137,7 @@ function App() {
             <span className="text-lg">📚</span>
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">单词哥-英语理解力提升训练</h1>
+            <h1 className="text-base md:text-xl lg:text-2xl font-bold">单词哥-英语理解力提升训练</h1>
             <p className="text-blue-100 text-xs md:text-sm">提升阅读速度与理解能力</p>
           </div>
         </div>
