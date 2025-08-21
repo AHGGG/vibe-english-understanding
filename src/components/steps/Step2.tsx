@@ -39,7 +39,7 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
 
   useEffect(() => {
     if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
-      // 2秒时间到，如果用户还没有标记，默认为❌没读懂
+      // 2秒时间到，如果用户还没有标记，默认为⭕读懂了
       if (currentSentence >= baseSentences.length) {
         determineUserPath();
         return;
@@ -47,11 +47,11 @@ export const Step2: React.FC<Step2Props> = ({ onComplete }) => {
       
       const currentMark = progress.marks.find(m => m.sentenceId === baseSentences[currentSentence].id);
       if (!currentMark) {
-        // 用户没有点击任何按钮，自动标记为❌没读懂
+        // 用户没有点击任何按钮，自动标记为⭕读懂了
         updateMark(baseSentences[currentSentence].id, {
-          isNotUnderstood: true,
+          isNotUnderstood: false,
           isStuck: false,
-          isUnderstood: false
+          isUnderstood: true
         });
       }
     }
