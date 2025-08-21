@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { SentenceDisplay } from '../SentenceDisplay';
-import { Timer } from '../Timer';
 import { useTimer } from '../../hooks/useTimer';
 import { pathASentences, pathBSentences, pathCSentences } from '../../data/sentences';
 import { Button } from '@/components/ui/button';
@@ -19,6 +18,7 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
   const [isStarted, setIsStarted] = useState(false);
   const [cycleCount, setCycleCount] = useState(0);
   const [understoodSentences, setUnderstoodSentences] = useState<Set<number>>(new Set());
+  const hasHandledTimeUp = React.useRef(false);
 
   const timeLimit = Math.floor(crossCount / 2) || 1; // X数量除以2作为倒计时秒数
   const { timer, start } = useTimer(timeLimit);
@@ -46,27 +46,35 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
       // 没理解，增加循环次数
       setCycleCount(prev => prev + 1);
 
-      // 如果还有其他句子未理解，切换到下一句
+      // 如果还有其他句子未理解，延迟1秒后切换到下一句
       const remainingSentences = sentences.filter((_, index) => !understoodSentences.has(index));
       if (remainingSentences.length > 1) {
-        let nextIndex = (currentSentence + 1) % sentences.length;
-        while (understoodSentences.has(nextIndex) && nextIndex !== currentSentence) {
-          nextIndex = (nextIndex + 1) % sentences.length;
-        }
-        setCurrentSentence(nextIndex);
+        setTimeout(() => {
+          let nextIndex = (currentSentence + 1) % sentences.length;
+          while (understoodSentences.has(nextIndex) && nextIndex !== currentSentence) {
+            nextIndex = (nextIndex + 1) % sentences.length;
+          }
+          setCurrentSentence(nextIndex);
+          // 重新开始计时
+          start(timeLimit);
+        }, 1000); // 1秒过渡延迟
+      } else {
+        // 重新开始计时（没有更多句子可切换）
+        start(timeLimit);
       }
-
-      // 重新开始计时
-      start(timeLimit);
     }
   }, [cycleCount, onComplete, understoodSentences, currentSentence, sentences, start, timeLimit]);
 
   useEffect(() => {
-    if (isStarted && timer.timeLeft === 0 && !timer.isRunning) {
+    if (isStarted && timer.timeLeft === 0 && !hasHandledTimeUp.current) {
       // 时间到了，没理解，进行下一句或循环
+      hasHandledTimeUp.current = true;
       handleTimeUp();
+    } else if (timer.timeLeft > 0) {
+      // 重置处理标志当计时器重新开始
+      hasHandledTimeUp.current = false;
     }
-  }, [timer.timeLeft, timer.isRunning, isStarted, handleTimeUp]);
+  }, [timer.timeLeft, isStarted, handleTimeUp]);
 
   const handleUnderstood = () => {
     const newUnderstood = new Set(understoodSentences);
@@ -79,12 +87,14 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
       return;
     }
 
-    // 切换到下一个未理解的句子
-    const nextUnunderstoodIndex = sentences.findIndex((_, index) => !newUnderstood.has(index));
-    if (nextUnunderstoodIndex !== -1) {
-      setCurrentSentence(nextUnunderstoodIndex);
-      start(timeLimit);
-    }
+    // 延迟1秒后切换到下一个未理解的句子
+    setTimeout(() => {
+      const nextUnunderstoodIndex = sentences.findIndex((_, index) => !newUnderstood.has(index));
+      if (nextUnunderstoodIndex !== -1) {
+        setCurrentSentence(nextUnunderstoodIndex);
+        start(timeLimit);
+      }
+    }, 1000); // 1秒过渡延迟
   };
 
   const handleStart = () => {
@@ -204,10 +214,6 @@ export const Step3: React.FC<Step3Props> = ({ userPath, crossCount, onComplete }
       
       <Card className="w-full max-w-6xl mt-2">
         <CardContent className="space-y-6">
-          <div className="flex justify-center">
-            <Timer timer={timer} />
-          </div>
-          
           <SentenceDisplay
             sentence={sentences[currentSentence]}
             isActive={true}
