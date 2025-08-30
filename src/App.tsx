@@ -8,6 +8,7 @@ import { Step5 } from './components/steps/Step5';
 import { Step6 } from './components/steps/Step6';
 import { Step7 } from './components/steps/Step7';
 import './index.css';
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const { progress, saveProgress, resetProgress } = useProgress();
@@ -205,6 +206,7 @@ function App() {
           </div>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
